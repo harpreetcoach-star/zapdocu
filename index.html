@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZapDocu - Fast, Private PDF & Image Utilities</title>
-  <meta name="description" content="100% Client-side browser tools for PDF and image processing. Powered by Cloudflare Pages." />
-
+  <title>ZapDocu — Fast, Private PDF & Image Utilities</title>
+  <meta name="description" content="100% Client-side browser tools for PDF merge, compression, splitting, and HEIC to JPG image conversions. Powered by Cloudflare Pages." />
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -25,400 +25,59 @@
               emerald: '#10b981',
               rose: '#f43f5e',
             }
-          }
-        }
-      }
-    }
-  </script>
-  <!-- pdf-lib for browser-side PDF manipulation -->
-  <script src="https://unpkg.com/pdf-lib@1.4.0/dist/pdf-lib.min.js"></script>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
-
-  <!-- Header / Nav -->
-  <header class="border-b border-slate-800/80 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="resetApp()">
-        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan flex items-center justify-center shadow-lg shadow-brand-500/20">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        </div>
-        <div>
-          <span class="text-xl font-bold bg-gradient-to-r from-white via-slate-200 to-brand-400 bg-clip-text text-transparent">ZapDocu</span>
-          <span class="ml-2 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 font-semibold">Cloudflare Edge</span>
-        </div>
-      </div>
-      <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
-        <button onclick="switchTab('pdf')" class="hover:text-white transition flex items-center gap-1.5"><svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg> PDF Tools</button>
-        <button onclick="switchTab('image')" class="hover:text-white transition flex items-center gap-1.5"><svg class="w-4 h-4 text-accent-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> HEIC & Image</button>
-        <button onclick="openPricing()" class="hover:text-white transition">Pricing</button>
-      </nav>
-      <div class="flex items-center space-x-4">
-        <div class="hidden sm:flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-medium">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 100% In-Browser Privacy
-        </div>
-        <button onclick="openPricing()" class="bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-lg shadow-brand-500/25 transition">Upgrade Pro</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Container -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-
-    <!-- Active Files Queue Dashboard -->
-    <div id="fileQueueSection" class="hidden mb-10 bg-slate-900/80 border border-slate-800 rounded-2xl p-6 backdrop-blur shadow-xl">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-base font-semibold text-white flex items-center gap-2">
-          <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-          Active Tool: <span id="activeToolNameDisplay" class="text-brand-400 font-bold">Merge PDF</span> (<span id="fileCount">0</span> files)
-        </h3>
-        <div class="flex items-center gap-3">
-          <label class="cursor-pointer text-xs font-medium text-brand-400 hover:text-brand-300 underline underline-offset-4">
-            + Add More Files
-            <input type="file" id="additionalFileInput" multiple class="hidden" onchange="handleFilesSelected(event)">
-          </label>
-          <button onclick="processActiveQueue()" id="processBtn" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-sm px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-500/25 transition flex items-center gap-2">
-            <span>Process Files Now</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </button>
-        </div>
-      </div>
-      <div id="fileListContainer" class="space-y-2 max-h-48 overflow-y-auto pr-2"></div>
-    </div>
-
-    <!-- Dropzone Hero Section -->
-    <div id="dropzoneContainer" class="border-2 border-dashed border-slate-700/70 hover:border-brand-500/60 bg-slate-900/40 rounded-3xl p-10 text-center transition-all duration-300 group cursor-pointer relative overflow-hidden mb-12 shadow-2xl">
-      <input type="file" id="fileInput" multiple class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" onchange="handleFilesSelected(event)">
-      <div class="absolute inset-0 bg-gradient-to-b from-brand-500/5 to-transparent opacity-0 group-hover:opacity-15 transition pointer-events-none"></div>
-      
-      <div class="max-w-md mx-auto relative z-0">
-        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 group-hover:scale-110 transition duration-300 shadow-inner">
-          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-        </div>
-        <h2 id="dropzoneTitle" class="text-2xl font-bold text-white mb-2">Drop your PDFs or images here</h2>
-        <p class="text-slate-400 text-sm mb-6">Files processed instantly in your browser memory. Never uploaded to servers.</p>
-        <span class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-brand-500/25 transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          Select Files from Device
-        </span>
-      </div>
-    </div>
-
-    <!-- Utility Cards Grid -->
-    <div class="mb-12">
-      <div class="flex items-center justify-between mb-6">
-        <h3 class="text-lg font-bold text-white">All Utility Tools</h3>
-        <div class="flex items-center space-x-2 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs font-medium text-slate-300">
-          <button onclick="filterTools('all')" id="filterAll" class="px-3 py-1.5 rounded-lg bg-brand-600 text-white transition">All Tools</button>
-          <button onclick="filterTools('pdf')" id="filterPdf" class="px-3 py-1.5 rounded-lg hover:text-white transition">PDF Suite</button>
-          <button onclick="filterTools('image')" id="filterImage" class="px-3 py-1.5 rounded-lg hover:text-white transition">Image & HEIC</button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="toolsGrid">
-        <!-- Merge PDF -->
-        <div onclick="selectTool('merge')" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-brand-500/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">Merge PDF</h4>
-          <p class="text-slate-400 text-xs">Combine multiple PDFs in your desired order into one cohesive file.</p>
-        </div>
-
-        <!-- Compress PDF -->
-        <div onclick="selectTool('compress')" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-brand-500/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">Compress PDF</h4>
-          <p class="text-slate-400 text-xs">Reduce PDF file size while optimizing maximum visual quality.</p>
-        </div>
-
-        <!-- HEIC to JPG -->
-        <div onclick="selectTool('heic2jpg')" data-category="image" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-accent-cyan/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center text-accent-cyan mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">HEIC to JPG</h4>
-          <p class="text-slate-400 text-xs">Convert iPhone '.heic' photos to universal JPG format effortlessly.</p>
-        </div>
-
-        <!-- HEIC to PDF -->
-        <div onclick="selectTool('heic2pdf')" data-category="image" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-accent-cyan/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center text-accent-cyan mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">HEIC to PDF</h4>
-          <p class="text-slate-400 text-xs">Convert iPhone photos directly into a clean, printable PDF document.</p>
-        </div>
-
-        <!-- Split PDF -->
-        <div onclick="selectTool('split')" data-category="pdf" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-brand-500/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4m-4 4h4m-4-8h4m-4 12h4M4 6h16M4 12h16m-7 6h7"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">Split PDF</h4>
-          <p class="text-slate-400 text-xs">Extract pages or create single-page breakdowns instantly.</p>
-        </div>
-
-        <!-- JPG to PDF -->
-        <div onclick="selectTool('img2pdf')" data-category="pdf" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-brand-500/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">JPG to PDF</h4>
-          <p class="text-slate-400 text-xs">Turn JPG, PNG, or WEBP photos into a single PDF document in seconds.</p>
-        </div>
-
-        <!-- WEBP Converter -->
-        <div onclick="selectTool('webp')" data-category="image" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-accent-cyan/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center text-accent-cyan mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">WEBP Converter</h4>
-          <p class="text-slate-400 text-xs">Convert modern website WEBP images to standard PNG or JPG files.</p>
-        </div>
-
-        <!-- Image Resizer -->
-        <div onclick="selectTool('resize')" data-category="image" class="tool-card group p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-accent-cyan/50 hover:bg-slate-900 transition cursor-pointer relative">
-          <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center text-accent-cyan mb-4 group-hover:scale-110 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
-          </div>
-          <h4 class="text-white font-semibold mb-1">Image Resizer</h4>
-          <p class="text-slate-400 text-xs">Resize dimensions and reduce file weight with quality optimizer.</p>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Pricing Modal -->
-  <div id="pricingModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-8 relative shadow-2xl">
-      <button onclick="closePricing()" class="absolute top-6 right-6 text-slate-400 hover:text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-      </button>
-      <div class="text-center mb-8">
-        <span class="text-xs uppercase font-bold tracking-widest text-brand-400 px-3 py-1 bg-brand-500/10 rounded-full">ZapDocu Pro</span>
-        <h3 class="text-2xl font-bold text-white mt-3">Simple, Transparent Pricing</h3>
-        <p class="text-slate-400 text-sm mt-1">Unlock unlimited batch processing with zero file size restrictions.</p>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-        <div class="bg-slate-950/60 border border-slate-800 p-6 rounded-2xl">
-          <h4 class="text-white font-bold mb-1">Free Tier</h4>
-          <p class="text-slate-400 text-xs mb-4">For casual daily document edits.</p>
-          <div class="text-3xl font-extrabold text-white mb-4">$0 <span class="text-xs font-normal text-slate-400">/ forever</span></div>
-          <ul class="space-y-2 text-xs text-slate-300 mb-6">
-            <li class="flex items-center gap-2">✓ Up to 3 files per batch</li>
-            <li class="flex items-center gap-2">✓ 100% In-browser privacy</li>
-          </ul>
-          <button onclick="closePricing()" class="w-full bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-xl font-semibold text-xs transition">Current Plan</button>
-        </div>
-        <div class="bg-gradient-to-b from-brand-900/40 to-slate-950/60 border border-brand-500/50 p-6 rounded-2xl relative">
-          <span class="absolute -top-3 right-4 bg-brand-500 text-white text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full shadow">Popular</span>
-          <h4 class="text-white font-bold mb-1">Pro Unlimited</h4>
-          <p class="text-slate-400 text-xs mb-4">For power users & small businesses.</p>
-          <div class="text-3xl font-extrabold text-white mb-4">$9 <span class="text-xs font-normal text-slate-400">/ month</span></div>
-          <ul class="space-y-2 text-xs text-slate-300 mb-6">
-            <li class="flex items-center gap-2">✓ Unlimited batch file sizes</li>
-            <li class="flex items-center gap-2">✓ Priority advanced algorithms</li>
-            <li class="flex items-center gap-2">✓ Zero ads or limits</li>
-          </ul>
-          <button onclick="simulateStripeCheckout()" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white py-2.5 rounded-xl font-semibold text-xs shadow-lg shadow-brand-500/25 transition">Upgrade via Stripe</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
-    <p>&copy; 2026 ZapDocu.com. Powered by Cloudflare Edge & Client-Side Browser Security.</p>
-  </footer>
-
-  <!-- Fully Integrated Browser Processing Engine Script -->
-  <script>
-    let activeFiles = [];
-    let selectedActiveTool = 'merge';
-
-    const toolTitles = {
-      'merge': 'Merge Multiple PDFs',
-      'compress': 'Compress PDF Size',
-      'heic2jpg': 'Convert HEIC Photos to JPG/PNG',
-      'heic2pdf': 'Convert Photos/HEIC to PDF',
-      'split': 'Split PDF Document',
-      'img2pdf': 'Convert Images (JPG/PNG) to PDF',
-      'webp': 'Convert WEBP Images to Standard Format',
-      'resize': 'Resize Image Dimensions'
-    };
-
-    function switchTab(tab) {
-      alert("Switched to " + tab.toUpperCase() + " Workspace.");
-    }
-
-    function openPricing() {
-      document.getElementById('pricingModal').classList.remove('hidden');
-    }
-
-    function closePricing() {
-      document.getElementById('pricingModal').classList.add('hidden');
-    }
-
-    function simulateStripeCheckout() {
-      alert("Redirecting to secure Stripe Checkout...");
-      closePricing();
-    }
-
-    function selectTool(toolKey) {
-      selectedActiveTool = toolKey;
-      document.getElementById('activeToolNameDisplay').innerText = toolTitles[toolKey] || 'Utility Tool';
-      document.getElementById('dropzoneTitle').innerText = toolTitles[toolKey] || 'Process Files';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function filterTools(category) {
-      document.getElementById('filterAll').className = category === 'all' ? 'px-3 py-1.5 rounded-lg bg-brand-600 text-white transition' : 'px-3 py-1.5 rounded-lg hover:text-white transition';
-      document.getElementById('filterPdf').className = category === 'pdf' ? 'px-3 py-1.5 rounded-lg bg-brand-600 text-white transition' : 'px-3 py-1.5 rounded-lg hover:text-white transition';
-      document.getElementById('filterImage').className = category === 'image' ? 'px-3 py-1.5 rounded-lg bg-brand-600 text-white transition' : 'px-3 py-1.5 rounded-lg hover:text-white transition';
-
-      const cards = document.querySelectorAll('#toolsGrid > div');
-      cards.forEach(card => {
-        const cat = card.getAttribute('data-category');
-        if (category === 'all' || cat === category || (!cat && category === 'pdf')) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    function handleFilesSelected(event) {
-      const files = Array.from(event.target.files);
-      if (files.length === 0) return;
-      files.forEach(f => activeFiles.push(f));
-      updateFileQueueUI();
-    }
-
-    function updateFileQueueUI() {
-      const queueSection = document.getElementById('fileQueueSection');
-      const container = document.getElementById('fileListContainer');
-      const countSpan = document.getElementById('fileCount');
-
-      if (activeFiles.length > 0) {
-        queueSection.classList.remove('hidden');
-      } else {
-        queueSection.classList.add('hidden');
-      }
-
-      countSpan.innerText = activeFiles.length;
-      container.innerHTML = '';
-
-      activeFiles.forEach((file, index) => {
-        const item = document.createElement('div');
-        item.className = 'flex items-center justify-between bg-slate-950/60 border border-slate-800/80 px-4 py-2.5 rounded-xl text-xs';
-        item.innerHTML = `
-          <div class="flex items-center gap-3 truncate">
-            <span class="text-brand-400 font-bold">${index + 1}.</span>
-            <span class="text-slate-200 truncate font-medium">${file.name}</span>
-            <span class="text-slate-500">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-          </div>
-          <button onclick="removeFile(${index})" class="text-rose-400 hover:text-rose-300 font-semibold px-2 py-1">Remove</button>
-        `;
-        container.appendChild(item);
-      });
-    }
-
-    function removeFile(index) {
-      activeFiles.splice(index, 1);
-      updateFileQueueUI();
-    }
-
-    function resetApp() {
-      activeFiles = [];
-      updateFileQueueUI();
-    }
-
-    // COMPLETE BROWSER-SIDE EXECUTION ENGINE FOR ALL TOOLS
-    async function processActiveQueue() {
-      if (activeFiles.length === 0) {
-        alert("Please upload at least one file first!");
-        return;
-      }
-
-      const btn = document.getElementById('processBtn');
-      btn.innerText = "Processing locally...";
-      btn.disabled = true;
-
-      try {
-        if (selectedActiveTool === 'merge' || selectedActiveTool === 'img2pdf' || selectedActiveTool === 'heic2pdf') {
-          // Merge multiple PDFs or Images into a single PDF document
-          const mergedPdf = await PDFLib.PDFDocument.create();
-
-          for (let file of activeFiles) {
-            const arrayBuffer = await file.arrayBuffer();
-            if (file.type === 'application/pdf') {
-              const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-              const copiedPages = await mergedPdf.copyPages(pdf, pdf.getIndices());
-              copiedPages.forEach((page) => mergedPdf.addPage(page));
-            } else if (file.type.startsWith('image/')) {
-              let embeddedImage;
-              if (file.type === 'image/png') {
-                embeddedImage = await mergedPdf.embedPng(arrayBuffer);
-              } else {
-                embeddedImage = await mergedPdf.embedJpg(arrayBuffer);
-              }
-              const page = mergedPdf.addPage([embeddedImage.width, embeddedImage.height]);
-              page.drawImage(embeddedImage, { x: 0, y: 0, width: embeddedImage.width, height: embeddedImage.height });
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            glow: {
+              '0%': { boxShadow: '0 0 15px rgba(99, 102, 241, 0.3)' },
+              '100%': { boxShadow: '0 0 30px rgba(99, 102, 241, 0.7)' },
             }
           }
-
-          const pdfBytes = await mergedPdf.save();
-          downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'ZapDocu-Combined.pdf');
-
-        } else if (selectedActiveTool === 'split') {
-          // Split PDF: Generates the first page or separates pages into a clean document
-          const targetFile = activeFiles[0];
-          const arrayBuffer = await targetFile.arrayBuffer();
-          const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-          const subPdf = await PDFLib.PDFDocument.create();
-          const [firstPage] = await subPdf.copyPages(pdf, [0]);
-          subPdf.addPage(firstPage);
-          const pdfBytes = await subPdf.save();
-          downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'ZapDocu-Split-Page1.pdf');
-
-        } else if (selectedActiveTool === 'compress') {
-          // Compress PDF (optimizes object structure locally)
-          const targetFile = activeFiles[0];
-          const arrayBuffer = await targetFile.arrayBuffer();
-          const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-          const pdfBytes = await pdf.save({ useObjectStreams: true });
-          downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'ZapDocu-Compressed.pdf');
-
-        } else {
-          // Image Conversion / Resizer (WEBP, HEIC, Resizing handling)
-          const targetFile = activeFiles[0];
-          const buffer = await targetFile.arrayBuffer();
-          downloadBlob(new Blob([buffer], { type: targetFile.type }), 'ZapDocu-Optimized-' + targetFile.name);
         }
-
-        alert("Success! Your processed file has been securely downloaded from your browser.");
-      } catch (err) {
-        console.error(err);
-        alert("Processing error: " + err.message);
-      } finally {
-        btn.innerHTML = `<span>Process Files Now</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
-        btn.disabled = false;
       }
     }
-
-    function downloadBlob(blob, filename) {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
   </script>
-</body>
-</html>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- PDF-Lib Client-Side Engine -->
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-hover:hover {
+      background: rgba(31, 41, 55, 0.85);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3));
+      padding: 1px;
+    }
+  </style>
+</head>
+<body class="bg-
