@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZapDocu — 100% Private Client-Side PDF & Image Utilities</title>
+  <title>ZapDocu — Free Client-Side PDF & Image Utilities</title>
   <meta name="description" content="ZapDocu is the fastest offline-first private PDF and image utility suite. Merge, split, compress, rotate, watermark PDFs, convert PDF to JPG, and adjust images directly in browser memory." />
-  
+
   <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -22,10 +22,10 @@
     }
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  
+
   <!-- PDF-Lib Engine (PDF Editing, Merging, Watermarking, Rotating) -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
@@ -35,6 +35,9 @@
     // Configure PDF.js Global Worker
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   </script>
+
+  <!-- Google AdSense Script Placeholder (Replace client ID with your real ca-pub ID) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 
   <style>
     body { font-family: 'Inter', sans-serif; }
@@ -46,10 +49,12 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-  <!-- SECTION 1: HEADER & NAVIGATION -->
+  <!-- ================================================================= -->
+  <!-- SECTION 1: HEADER & NAVIGATION                                   -->
+  <!-- ================================================================= -->
   <header class="sticky top-0 z-40 border-b border-slate-800/80 glass-card">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="selectTool('merge-pdf')">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateToTool('merge-pdf')">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan p-0.5 flex items-center justify-center shadow-lg shadow-brand-500/20">
           <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
             <i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i>
@@ -57,17 +62,17 @@
         </div>
         <div>
           <span class="text-xl font-extrabold tracking-tight">Zap<span class="gradient-text">Docu</span></span>
-          <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold tracking-wider text-accent-cyan uppercase bg-accent-cyan/10 px-2 py-0.5 rounded-full border border-accent-cyan/20">Cloudflare Edge</span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold tracking-wider text-accent-cyan uppercase bg-accent-cyan/10 px-2 py-0.5 rounded-full border border-accent-cyan/20">Client-Side Engine</span>
         </div>
       </div>
-      
+
       <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-300">
-        <a href="#workspace" onclick="selectTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF</a>
-        <a href="#workspace" onclick="selectTool('pdf-jpg')" class="hover:text-brand-400 transition">PDF to JPG</a>
-        <a href="#workspace" onclick="selectTool('compress-pdf')" class="hover:text-brand-400 transition">Compress</a>
-        <a href="#workspace" onclick="selectTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate</a>
-        <a href="#workspace" onclick="selectTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark</a>
-        <a href="#pricing" class="hover:text-white transition">Pricing</a>
+        <a href="#merge-pdf" onclick="navigateToTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF</a>
+        <a href="#pdf-jpg" onclick="navigateToTool('pdf-jpg')" class="hover:text-brand-400 transition">PDF to JPG</a>
+        <a href="#compress-pdf" onclick="navigateToTool('compress-pdf')" class="hover:text-brand-400 transition">Compress</a>
+        <a href="#rotate-pdf" onclick="navigateToTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate</a>
+        <a href="#watermark-pdf" onclick="navigateToTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark</a>
+        <a href="#pricing-section" class="hover:text-white transition">Pricing</a>
       </nav>
 
       <div class="flex items-center space-x-4">
@@ -81,76 +86,153 @@
     </div>
   </header>
 
-  <!-- SECTION 2: HERO & ACTIVE WORKSPACE -->
+  <!-- ================================================================= -->
+  <!-- ADSENSE SLOT 1: TOP LEADERBOARD AD BANNER                         -->
+  <!-- ================================================================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+    <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3 text-center flex flex-col items-center justify-center min-h-[90px]">
+      <span class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-1">Advertisement</span>
+      <!-- Google AdSense Leaderboard Unit -->
+      <ins class="adsbygoogle"
+           style="display:block; width:100%; height:90px;"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <div class="text-xs text-slate-600 italic">[ AdSpace - Responsive Top Banner ]</div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- SECTION 2: HERO & ACTIVE WORKSPACE                                -->
+  <!-- ================================================================= -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-    <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
+
+    <!-- Hero Header -->
+    <div class="text-center max-w-3xl mx-auto space-y-4 pt-2">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
         <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
         <span>Zero Server Uploads • PDF.js & PDF-Lib Engine Active</span>
       </div>
-      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-100">
+      <h1 id="hero-title" class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-100">
         The Ultimate Offsite Private <br/>
         <span class="gradient-text">PDF & Image Processing Suite</span>
       </h1>
-      <p class="text-slate-400 text-base leading-relaxed">
+      <p id="hero-subtitle" class="text-slate-400 text-base leading-relaxed">
         Convert PDF pages to high-resolution JPG images, watermark, merge, split, and compress files directly in browser RAM with zero privacy risk.
       </p>
     </div>
 
-    <!-- Active Workspace Dropzone -->
-    <section id="workspace" class="gradient-border shadow-2xl">
-      <div class="bg-slate-900/90 rounded-[15px] p-6 sm:p-8 space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-          <div class="flex items-center space-x-3">
-            <div class="p-2.5 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20">
-              <i id="active-tool-icon" data-lucide="file-plus-2" class="w-6 h-6"></i>
+    <!-- Active Workspace Dropzone + Sidebar Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Main Dropzone Container (Spans 3 Columns) -->
+      <section id="workspace" class="lg:col-span-3 gradient-border shadow-2xl">
+        <div class="bg-slate-900/90 rounded-[15px] p-6 sm:p-8 space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div class="flex items-center space-x-3">
+              <div class="p-2.5 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20">
+                <i id="active-tool-icon" data-lucide="file-plus-2" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h2 id="active-tool-title" class="text-xl font-bold text-slate-100">Merge PDF Files</h2>
+                <p id="active-tool-desc" class="text-xs text-slate-400">Combine multiple PDF documents into a single organized file locally.</p>
+              </div>
             </div>
-            <div>
-              <h2 id="active-tool-title" class="text-xl font-bold text-slate-100">Merge PDF Files</h2>
-              <p id="active-tool-desc" class="text-xs text-slate-400">Combine multiple PDF documents into a single organized file locally.</p>
+            <span class="text-[11px] font-semibold text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20" id="tool-badge">PDF Tool</span>
+          </div>
+
+          <div 
+            id="dropzone"
+            ondragover="event.preventDefault()"
+            ondrop="handleFileDrop(event)"
+            class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-10 text-center bg-slate-950/50 hover:bg-slate-900/50 transition cursor-pointer flex flex-col items-center justify-center space-y-4"
+            onclick="document.getElementById('file-input').click()"
+          >
+            <input type="file" id="file-input" class="hidden" multiple onchange="handleFileSelect(event)" />
+            <div class="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-brand-400">
+              <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+            </div>
+            <p class="text-base font-semibold text-slate-200">Drag & Drop your files here, or <span class="text-brand-400 underline">browse computer</span></p>
+            <p class="text-xs text-slate-500">Files never leave your device. 100% private client-side processing.</p>
+          </div>
+
+          <!-- File Queue List -->
+          <div id="file-queue-container" class="hidden space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-slate-300">Queued Files (<span id="queue-count">0</span>)</h3>
+              <button onclick="clearQueue()" class="text-xs text-rose-400 hover:text-rose-300">Clear All</button>
+            </div>
+            <div id="file-queue-list" class="space-y-2 max-h-48 overflow-y-auto pr-2"></div>
+            
+            <div class="flex justify-between items-center pt-2">
+              <button onclick="document.getElementById('file-input').click()" class="text-xs text-brand-400 hover:underline">+ Add More Files</button>
+              <button id="process-btn" onclick="executeToolProcess()" class="px-8 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-sm font-bold shadow-lg flex items-center gap-2">
+                <i data-lucide="play" class="w-4 h-4"></i> Process Files Now
+              </button>
             </div>
           </div>
         </div>
+      </section>
 
-        <div 
-          id="dropzone"
-          ondragover="event.preventDefault()"
-          ondrop="handleFileDrop(event)"
-          class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-10 text-center bg-slate-950/50 hover:bg-slate-900/50 transition cursor-pointer flex flex-col items-center justify-center space-y-4"
-          onclick="document.getElementById('file-input').click()"
-        >
-          <input type="file" id="file-input" class="hidden" multiple onchange="handleFileSelect(event)" />
-          <div class="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-brand-400">
-            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
-          </div>
-          <p class="text-base font-semibold text-slate-200">Drag & Drop your files here, or <span class="text-brand-400 underline">browse computer</span></p>
-          <p class="text-xs text-slate-500">Files never leave your device. 100% private client-side processing.</p>
+      <!-- ADSENSE SLOT 2: SIDEBAR AD PLACEMENT -->
+      <aside class="lg:col-span-1 space-y-4">
+        <div class="glass-card rounded-2xl p-4 text-center h-full flex flex-col items-center justify-center min-h-[300px]">
+          <span class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-2">Advertisement</span>
+          <!-- Google AdSense Sidebar Rectangle Unit -->
+          <ins class="adsbygoogle"
+               style="display:block; width:100%; height:250px;"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="9876543210"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <div class="text-xs text-slate-600 italic">[ AdSpace - Sidebar Rect ]</div>
         </div>
+      </aside>
 
-        <!-- File Queue List -->
-        <div id="file-queue-container" class="hidden space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-semibold text-slate-300">Queued Files (<span id="queue-count">0</span>)</h3>
-            <button onclick="clearQueue()" class="text-xs text-rose-400 hover:text-rose-300">Clear All</button>
-          </div>
-          <div id="file-queue-list" class="space-y-2 max-h-48 overflow-y-auto pr-2"></div>
-          
-          <div class="flex justify-between items-center pt-2">
-            <button onclick="document.getElementById('file-input').click()" class="text-xs text-brand-400 hover:underline">+ Add More Files</button>
-            <button id="process-btn" onclick="executeToolProcess()" class="px-8 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-sm font-bold shadow-lg flex items-center gap-2">
-              <i data-lucide="play" class="w-4 h-4"></i> Process Files Now
-            </button>
-          </div>
+    </div>
+
+    <!-- Hidden Canvas Container for PDF.js Rendering -->
+    <div id="pdf-canvas-container" class="hidden"></div>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 3: SEO DYNAMIC LANDING PAGE INFORMATION CONTENT           -->
+    <!-- ================================================================= -->
+    <section id="seo-landing-content" class="glass-card p-8 rounded-3xl space-y-6 border border-slate-800">
+      <div class="space-y-3">
+        <h2 id="seo-heading" class="text-2xl font-bold text-slate-100">How to Merge PDF Files Online Privately</h2>
+        <p id="seo-description" class="text-sm text-slate-300 leading-relaxed">
+          Merging PDF files locally in your browser has never been safer. ZapDocu processes your files entirely inside your web browser using HTML5 Web Assembly and PDF-Lib JavaScript engines. Your documents are never uploaded to remote servers, cloud folders, or external API endpoints.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-800">
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center font-bold text-sm">1</div>
+          <h3 class="font-semibold text-sm text-slate-200">Select Files</h3>
+          <p class="text-xs text-slate-400">Drag and drop your PDF or image files into the workspace dropzone above.</p>
+        </div>
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-accent-cyan/10 text-accent-cyan flex items-center justify-center font-bold text-sm">2</div>
+          <h3 class="font-semibold text-sm text-slate-200">Local Processing</h3>
+          <p class="text-xs text-slate-400">Click process. Your browser immediately compiles and modifies your files in RAM.</p>
+        </div>
+        <div class="space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-accent-emerald/10 text-accent-emerald flex items-center justify-center font-bold text-sm">3</div>
+          <h3 class="font-semibold text-sm text-slate-200">Instant Download</h3>
+          <p class="text-xs text-slate-400">Download your output document directly to your computer or device instantly.</p>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: ALL UTILITY TOOLS GRID -->
+    <!-- ================================================================= -->
+    <!-- SECTION 4: ALL UTILITY TOOLS GRID & SEO DIRECTORY LINKS          -->
+    <!-- ================================================================= -->
     <section class="space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800/80 pb-4 gap-4">
         <div>
-          <h2 class="text-2xl font-bold tracking-tight text-slate-100">All Utility Tools</h2>
-          <p class="text-xs text-slate-400">Select any tool below to load it into your workspace above.</p>
+          <h2 class="text-2xl font-bold tracking-tight text-slate-100">All Utility Tools & Landing Pages</h2>
+          <p class="text-xs text-slate-400">Click any tool to load its dedicated workspace and SEO landing page.</p>
         </div>
         <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
           <button id="tab-all" onclick="filterCategory('all')" class="px-3 py-1 rounded-lg bg-brand-600 text-white font-medium">All Tools</button>
@@ -159,11 +241,31 @@
         </div>
       </div>
 
+      <!-- Dynamic Tools Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="toolsGrid"></div>
     </section>
 
-    <!-- SECTION 4: PRICING SECTION -->
-    <section id="pricing" class="space-y-8 pt-8">
+    <!-- ================================================================= -->
+    <!-- ADSENSE SLOT 3: MID-PAGE HORIZONTAL BANNER AD                     -->
+    <!-- ================================================================= -->
+    <div class="w-full">
+      <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3 text-center flex flex-col items-center justify-center min-h-[100px]">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-1">Advertisement</span>
+        <!-- Google AdSense Responsive In-Feed Unit -->
+        <ins class="adsbygoogle"
+             style="display:block; width:100%; height:90px;"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1122334455"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+        <div class="text-xs text-slate-600 italic">[ AdSpace - Mid Content Banner ]</div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 5: PRICING SECTION                                        -->
+    <!-- ================================================================= -->
+    <section id="pricing-section" class="space-y-8 pt-8">
       <div class="text-center max-w-2xl mx-auto space-y-3">
         <span class="text-xs font-bold text-brand-400 uppercase tracking-widest bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Flexible Pricing Plans</span>
         <h2 class="text-4xl font-extrabold text-slate-100">Simple, Transparent Plans</h2>
@@ -211,15 +313,71 @@
         </div>
       </div>
     </section>
+
+    <!-- ================================================================= -->
+    <!-- ADSENSE SLOT 4: FOOTER BANNER AD                                 -->
+    <!-- ================================================================= -->
+    <div class="w-full pt-4">
+      <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3 text-center flex flex-col items-center justify-center min-h-[90px]">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-1">Advertisement</span>
+        <!-- Google AdSense Footer Leaderboard Unit -->
+        <ins class="adsbygoogle"
+             style="display:block; width:100%; height:90px;"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="5566778899"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <div class="text-xs text-slate-600 italic">[ AdSpace - Footer Banner ]</div>
+      </div>
+    </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-800/80 bg-slate-950 py-10 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <p>&copy; 2026 ZapDocu.com • Powered by PDF.js & PDF-Lib Client Engines.</p>
-      <div class="flex items-center space-x-6">
-        <a href="#workspace" class="hover:text-slate-300">Privacy Policy</a>
-        <a href="#pricing" class="hover:text-slate-300">Stripe Terms</a>
+  <!-- Footer with SEO Tool Directory Links -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-12 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <!-- SEO Tools Landing Directory Links -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-xs border-b border-slate-800 pb-8">
+        <div>
+          <h4 class="font-bold text-slate-200 mb-3">PDF Operations</h4>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#merge-pdf" onclick="navigateToTool('merge-pdf')" class="hover:text-brand-400">Merge PDF Online</a></li>
+            <li><a href="#split-pdf" onclick="navigateToTool('split-pdf')" class="hover:text-brand-400">Split PDF Pages</a></li>
+            <li><a href="#compress-pdf" onclick="navigateToTool('compress-pdf')" class="hover:text-brand-400">Compress PDF File Size</a></li>
+            <li><a href="#rotate-pdf" onclick="navigateToTool('rotate-pdf')" class="hover:text-brand-400">Rotate PDF Pages</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-200 mb-3">Conversions</h4>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#pdf-jpg" onclick="navigateToTool('pdf-jpg')" class="hover:text-brand-400">Convert PDF to JPG</a></li>
+            <li><a href="#jpg-pdf" onclick="navigateToTool('jpg-pdf')" class="hover:text-brand-400">Convert JPG to PDF</a></li>
+            <li><a href="#heic-jpg" onclick="navigateToTool('heic-jpg')" class="hover:text-brand-400">Convert HEIC to JPG</a></li>
+            <li><a href="#heic-pdf" onclick="navigateToTool('heic-pdf')" class="hover:text-brand-400">Convert HEIC to PDF</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-200 mb-3">Security & Editing</h4>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#watermark-pdf" onclick="navigateToTool('watermark-pdf')" class="hover:text-brand-400">Watermark PDF Online</a></li>
+            <li><a href="#page-numbers" onclick="navigateToTool('page-numbers')" class="hover:text-brand-400">Add Page Numbers</a></li>
+            <li><a href="#webp-png" onclick="navigateToTool('webp-png')" class="hover:text-brand-400">WEBP Image Converter</a></li>
+            <li><a href="#image-resizer" onclick="navigateToTool('image-resizer')" class="hover:text-brand-400">Online Image Resizer</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-200 mb-3">ZapDocu Privacy</h4>
+          <p class="text-slate-400 leading-relaxed mb-3">ZapDocu operates 100% in-browser. Your confidential files are never uploaded to any remote server or third party.</p>
+          <span class="text-accent-emerald flex items-center gap-1 font-semibold"><i data-lucide="shield-check" class="w-4 h-4"></i> SSL Encrypted Client Processing</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 ZapDocu.com • Powered by PDF.js & PDF-Lib Client Engines.</p>
+        <div class="flex items-center space-x-6">
+          <a href="#workspace" class="hover:text-slate-300">Privacy Policy</a>
+          <a href="#pricing-section" class="hover:text-slate-300">Stripe Terms</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -236,21 +394,107 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT ENGINE & TOOL CONFIGURATION -->
+  <!-- ================================================================= -->
+  <!-- JAVASCRIPT ENGINE, ROUTING & AD INITIALIZATION                     -->
+  <!-- ================================================================= -->
   <script>
     const toolsData = {
-      'merge-pdf': { title: 'Merge PDF', desc: 'Combine multiple PDFs into one document.', icon: 'file-plus-2', category: 'pdf' },
-      'pdf-jpg': { title: 'PDF to JPG', desc: 'Convert PDF pages into high-resolution JPG photos.', icon: 'image', category: 'pdf' },
-      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while preserving quality.', icon: 'file-digit', category: 'pdf' },
-      'rotate-pdf': { title: 'Rotate PDF', desc: 'Rotate landscape or upside-down PDF pages.', icon: 'rotate-cw', category: 'pdf' },
-      'split-pdf': { title: 'Split PDF', desc: 'Extract specific page ranges into new PDFs.', icon: 'scissors', category: 'pdf' },
-      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers on every page.', icon: 'list-ordered', category: 'pdf' },
-      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay text watermarks like CONFIDENTIAL.', icon: 'stamp', category: 'pdf' },
-      'jpg-pdf': { title: 'JPG to PDF', desc: 'Turn JPG, PNG, or WEBP photos into a PDF.', icon: 'image-plus', category: 'pdf' },
-      'heic-jpg': { title: 'HEIC to JPG', desc: 'Convert iPhone .heic photos to universal JPG.', icon: 'smartphone', category: 'image' },
-      'heic-pdf': { title: 'HEIC to PDF', desc: 'Convert iPhone photos directly into printable PDF.', icon: 'file-output', category: 'image' },
-      'webp-png': { title: 'WEBP Converter', desc: 'Convert WEBP images to PNG or JPG format.', icon: 'refresh-cw', category: 'image' },
-      'image-resizer': { title: 'Image Resizer', desc: 'Adjust dimensions and reduce image file size.', icon: 'scaling', category: 'image' }
+      'merge-pdf': { 
+        title: 'Merge PDF', 
+        desc: 'Combine multiple PDFs into one document.', 
+        icon: 'file-plus-2', 
+        category: 'pdf',
+        seoHeading: 'How to Merge PDF Files Online Privately',
+        seoDesc: 'Easily combine two or more PDF files into a single structured document. Upload your PDFs, reorder them if needed, and merge them instantly in your browser without uploading to any server.'
+      },
+      'pdf-jpg': { 
+        title: 'PDF to JPG', 
+        desc: 'Convert PDF pages into high-resolution JPG photos.', 
+        icon: 'image', 
+        category: 'pdf',
+        seoHeading: 'Convert PDF Pages to High-Quality JPG Images',
+        seoDesc: 'Render and extract high-definition JPG images directly from your PDF pages using client-side WebAssembly rendering.'
+      },
+      'compress-pdf': { 
+        title: 'Compress PDF', 
+        desc: 'Reduce file size while preserving quality.', 
+        icon: 'file-digit', 
+        category: 'pdf',
+        seoHeading: 'Compress & Reduce PDF File Size Online',
+        seoDesc: 'Shrink large PDF documents while maintaining sharp text and image quality natively in your browser.'
+      },
+      'rotate-pdf': { 
+        title: 'Rotate PDF', 
+        desc: 'Rotate landscape or upside-down PDF pages.', 
+        icon: 'rotate-cw', 
+        category: 'pdf',
+        seoHeading: 'Rotate PDF Pages & Save Permanently',
+        seoDesc: 'Fix upside-down pages or rotate landscape PDF documents by 90, 180, or 270 degrees fast and privately.'
+      },
+      'split-pdf': { 
+        title: 'Split PDF', 
+        desc: 'Extract specific page ranges into new PDFs.', 
+        icon: 'scissors', 
+        category: 'pdf',
+        seoHeading: 'Split & Extract Pages from PDF Files',
+        seoDesc: 'Separate specific page ranges or extract individual pages into separate PDF files without installing software.'
+      },
+      'page-numbers': { 
+        title: 'Add Page Numbers', 
+        desc: 'Stamp clean page numbers on every page.', 
+        icon: 'list-ordered', 
+        category: 'pdf',
+        seoHeading: 'Add Page Numbers to PDF Documents',
+        seoDesc: 'Automatically insert page numbering (Page X of Y) at the top or bottom of your PDF pages with clean formatting.'
+      },
+      'watermark-pdf': { 
+        title: 'Watermark PDF', 
+        desc: 'Overlay text watermarks like CONFIDENTIAL.', 
+        icon: 'stamp', 
+        category: 'pdf',
+        seoHeading: 'Add Text Watermarks to Confidential PDFs',
+        seoDesc: 'Protect your sensitive documents by stamping custom text watermarks diagonally across your PDF pages.'
+      },
+      'jpg-pdf': { 
+        title: 'JPG to PDF', 
+        desc: 'Turn JPG, PNG, or WEBP photos into a PDF.', 
+        icon: 'image-plus', 
+        category: 'pdf',
+        seoHeading: 'Convert JPG Images into PDF Documents',
+        seoDesc: 'Convert JPEG, PNG, or WEBP photos into a single clean PDF document ready for printing or email attachments.'
+      },
+      'heic-jpg': { 
+        title: 'HEIC to JPG', 
+        desc: 'Convert iPhone .heic photos to universal JPG.', 
+        icon: 'smartphone', 
+        category: 'image',
+        seoHeading: 'Convert iPhone HEIC Photos to JPG Format',
+        seoDesc: 'Convert Apple HEIC photos from your iPhone into standard JPG image format compatible with all computers.'
+      },
+      'heic-pdf': { 
+        title: 'HEIC to PDF', 
+        desc: 'Convert iPhone photos directly into printable PDF.', 
+        icon: 'file-output', 
+        category: 'image',
+        seoHeading: 'Convert iPhone HEIC Photos directly to PDF',
+        seoDesc: 'Transform iPhone HEIC photos into high-quality PDF files instantly without intermediate image conversions.'
+      },
+      'webp-png': { 
+        title: 'WEBP Converter', 
+        desc: 'Convert WEBP images to PNG or JPG format.', 
+        icon: 'refresh-cw', 
+        category: 'image',
+        seoHeading: 'Convert WEBP Images to PNG or JPG',
+        seoDesc: 'Convert web-optimized WEBP images back into universal PNG or JPG graphics easily.'
+      },
+      'image-resizer': { 
+        title: 'Image Resizer', 
+        desc: 'Adjust dimensions and reduce image file size.', 
+        icon: 'scaling', 
+        category: 'image',
+        seoHeading: 'Resize Image Dimensions & File Size Online',
+        seoDesc: 'Scale down image dimensions and reduce file size fast in browser RAM using high-speed canvas drawing.'
+      }
     };
 
     let currentTool = 'merge-pdf';
@@ -258,8 +502,43 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderToolsGrid();
+      handleInitialRoute();
       lucide.createIcons();
+      pushAdSenseAds();
     });
+
+    // Handle initial Hash Routing for SEO Landing Pages (e.g. site.com/#pdf-jpg)
+    function handleInitialRoute() {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && toolsData[hash]) {
+        navigateToTool(hash);
+      } else {
+        navigateToTool('merge-pdf');
+      }
+    }
+
+    // Dynamic Tool Switcher & Routing Handler
+    function navigateToTool(key) {
+      if (!toolsData[key]) return;
+      currentTool = key;
+      const tool = toolsData[key];
+
+      // Update URL hash for dynamic routing & deep-linking
+      window.location.hash = key;
+
+      // Update active workspace header
+      document.getElementById('active-tool-title').innerText = tool.title;
+      document.getElementById('active-tool-desc').innerText = tool.desc;
+      document.getElementById('active-tool-icon').setAttribute('data-lucide', tool.icon);
+      document.getElementById('tool-badge').innerText = tool.category.toUpperCase() + ' TOOL';
+
+      // Update SEO Landing Page content dynamically
+      document.getElementById('seo-heading').innerText = tool.seoHeading;
+      document.getElementById('seo-description').innerText = tool.seoDesc;
+
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     function renderToolsGrid(filter = 'all') {
       const grid = document.getElementById('toolsGrid');
@@ -268,9 +547,12 @@
         const tool = toolsData[key];
         if (filter === 'all' || tool.category === filter) {
           grid.innerHTML += `
-            <div onclick="selectTool('${key}')" class="glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
-              <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center">
-                <i data-lucide="${tool.icon}" class="w-5 h-5"></i>
+            <div onclick="navigateToTool('${key}')" class="glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center">
+                  <i data-lucide="${tool.icon}" class="w-5 h-5"></i>
+                </div>
+                <span class="text-[10px] text-slate-500 font-semibold uppercase">${tool.category}</span>
               </div>
               <h3 class="font-bold text-slate-200">${tool.title}</h3>
               <p class="text-xs text-slate-400">${tool.desc}</p>
@@ -279,16 +561,6 @@
         }
       });
       lucide.createIcons();
-    }
-
-    function selectTool(key) {
-      currentTool = key;
-      const tool = toolsData[key] || toolsData['merge-pdf'];
-      document.getElementById('active-tool-title').innerText = tool.title;
-      document.getElementById('active-tool-desc').innerText = tool.desc;
-      document.getElementById('active-tool-icon').setAttribute('data-lucide', tool.icon);
-      lucide.createIcons();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function filterCategory(cat) {
@@ -460,6 +732,18 @@
     function simulateStripeCheckout() {
       alert("Stripe Integration Point: Link your payment URL here when ready!");
       closePaywall();
+    }
+
+    // Safely trigger Google AdSense pushes once adsbygoogle script loads
+    function pushAdSenseAds() {
+      try {
+        const ads = document.querySelectorAll('.adsbygoogle');
+        ads.forEach(() => {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        });
+      } catch (e) {
+        console.log('AdSense initialization ready.');
+      }
     }
   </script>
 </body>
