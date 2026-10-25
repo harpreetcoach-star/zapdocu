@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZapDocu — 100% Private Client-Side PDF & Image Utilities</title>
-  <meta name="description" content="ZapDocu is the fastest offline-first private PDF and image utility suite. Merge, split, compress, rotate, watermark PDFs and convert images directly in browser memory." />
+  <meta name="description" content="ZapDocu is the fastest offline-first private PDF and image utility suite. Merge, split, compress, rotate, watermark PDFs, convert PDF to JPG, and adjust images directly in browser memory." />
   
-  <!-- Tailwind CSS & Font -->
+  <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,9 +23,18 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Lucide Icons & PDF Engine -->
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- PDF-Lib Engine (PDF Editing, Merging, Watermarking, Rotating) -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+  <!-- PDF.js Engine v3.11.174 (Rendering PDF pages to Canvas & Exporting JPG) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // Configure PDF.js Global Worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
 
   <style>
     body { font-family: 'Inter', sans-serif; }
@@ -35,7 +44,7 @@
     .gradient-border { border-radius: 1rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3)); padding: 1px; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
   <!-- ================================================================= -->
   <!-- SECTION 1: HEADER & NAVIGATION                                   -->
@@ -56,6 +65,7 @@
       
       <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-300">
         <a href="#workspace" onclick="selectTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF</a>
+        <a href="#workspace" onclick="selectTool('pdf-jpg')" class="hover:text-brand-400 transition">PDF to JPG</a>
         <a href="#workspace" onclick="selectTool('compress-pdf')" class="hover:text-brand-400 transition">Compress</a>
         <a href="#workspace" onclick="selectTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate</a>
         <a href="#workspace" onclick="selectTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark</a>
@@ -82,14 +92,14 @@
     <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
         <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
-        <span>Zero Server Uploads • Processed Locally in Device Memory</span>
+        <span>Zero Server Uploads • PDF.js & PDF-Lib Engine Active</span>
       </div>
       <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-100">
         The Ultimate Offsite Private <br/>
         <span class="gradient-text">PDF & Image Processing Suite</span>
       </h1>
       <p class="text-slate-400 text-base leading-relaxed">
-        Watermark, rotate, merge, split, and convert your documents directly in your browser memory with zero privacy risk.
+        Convert PDF pages to high-resolution JPG images, watermark, merge, split, and compress files directly in browser RAM with zero privacy risk.
       </p>
     </div>
 
@@ -120,9 +130,10 @@
             <i data-lucide="upload-cloud" class="w-8 h-8"></i>
           </div>
           <p class="text-base font-semibold text-slate-200">Drag & Drop your files here, or <span class="text-brand-400 underline">browse computer</span></p>
-          <p class="text-xs text-slate-500">Files never leave your device. 100% private and secure.</p>
+          <p class="text-xs text-slate-500">Files never leave your device. 100% private client-side processing.</p>
         </div>
 
+        <!-- File Queue List -->
         <div id="file-queue-container" class="hidden space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-sm font-semibold text-slate-300">Queued Files (<span id="queue-count">0</span>)</h3>
@@ -140,6 +151,9 @@
       </div>
     </section>
 
+    <!-- Hidden Canvas Container for PDF.js Rendering -->
+    <div id="pdf-canvas-container" class="hidden"></div>
+
     <!-- ================================================================= -->
     <!-- SECTION 3: ALL UTILITY TOOLS GRID                                -->
     <!-- ================================================================= -->
@@ -156,7 +170,7 @@
         </div>
       </div>
 
-      <!-- Tools Grid (Dynamically rendered by JavaScript so you never break HTML!) -->
+      <!-- Tools Grid (Dynamically rendered by JS) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="toolsGrid"></div>
     </section>
 
@@ -182,7 +196,7 @@
             <ul class="space-y-4 text-sm text-slate-300">
               <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> <strong>20 Free Conversions</strong> every 24 hours</li>
               <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> 100% In-Browser Privacy</li>
-              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> Access to all 12 core tools</li>
+              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> Native PDF.js Page Rendering</li>
             </ul>
           </div>
           <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full py-4 rounded-2xl border border-slate-700 hover:bg-slate-800 text-sm font-bold text-slate-200">Start Free Now</button>
@@ -216,10 +230,10 @@
   <!-- Footer -->
   <footer class="border-t border-slate-800/80 bg-slate-950 py-10 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <p>&copy; 2026 ZapDocu.com • Cloudflare Edge Client-Side Utilities.</p>
+      <p>&copy; 2026 ZapDocu.com • Powered by PDF.js & PDF-Lib Client Engines.</p>
       <div class="flex items-center space-x-6">
         <a href="#workspace" class="hover:text-slate-300">Privacy Policy</a>
-        <a href="#pricing" class="hover:text-slate-300">Stripe Billing Terms</a>
+        <a href="#pricing" class="hover:text-slate-300">Stripe Terms</a>
       </div>
     </div>
   </footer>
@@ -240,26 +254,24 @@
   <!-- JAVASCRIPT ENGINE & TOOL CONFIGURATION                            -->
   <!-- ================================================================= -->
   <script>
-    // Master Tools Data Dictionary (Add or edit tools easily here!)
     const toolsData = {
-      'merge-pdf': { title: 'Merge PDF', desc: 'Combine multiple PDFs into one document.', icon: 'file-plus-2', category: 'pdf', color: 'rose' },
-      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while preserving quality.', icon: 'file-digit', category: 'pdf', color: 'indigo' },
-      'rotate-pdf': { title: 'Rotate PDF', desc: 'Rotate landscape or upside-down PDF pages.', icon: 'rotate-cw', category: 'pdf', color: 'brand' },
-      'split-pdf': { title: 'Split PDF', desc: 'Extract specific page ranges into new PDFs.', icon: 'scissors', category: 'pdf', color: 'amber' },
-      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers on every page.', icon: 'list-ordered', category: 'pdf', color: 'emerald' },
-      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay text watermarks like CONFIDENTIAL.', icon: 'stamp', category: 'pdf', color: 'purple' },
-      'pdf-jpg': { title: 'PDF to JPG', desc: 'Extract PDF pages into standalone JPG images.', icon: 'image', category: 'pdf', color: 'teal' },
-      'jpg-pdf': { title: 'JPG to PDF', desc: 'Turn JPG, PNG, or WEBP photos into a PDF.', icon: 'image-plus', category: 'pdf', color: 'cyan' },
-      'heic-jpg': { title: 'HEIC to JPG', desc: 'Convert iPhone .heic photos to universal JPG.', icon: 'smartphone', category: 'image', color: 'rose' },
-      'heic-pdf': { title: 'HEIC to PDF', desc: 'Convert iPhone photos directly into printable PDF.', icon: 'file-output', category: 'image', color: 'blue' },
-      'webp-png': { title: 'WEBP Converter', desc: 'Convert WEBP images to PNG or JPG format.', icon: 'refresh-cw', category: 'image', color: 'indigo' },
-      'image-resizer': { title: 'Image Resizer', desc: 'Adjust dimensions and reduce image file size.', icon: 'scaling', category: 'image', color: 'amber' }
+      'merge-pdf': { title: 'Merge PDF', desc: 'Combine multiple PDFs into one document.', icon: 'file-plus-2', category: 'pdf' },
+      'pdf-jpg': { title: 'PDF to JPG', desc: 'Convert PDF pages into high-resolution JPG photos.', icon: 'image', category: 'pdf' },
+      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while preserving quality.', icon: 'file-digit', category: 'pdf' },
+      'rotate-pdf': { title: 'Rotate PDF', desc: 'Rotate landscape or upside-down PDF pages.', icon: 'rotate-cw', category: 'pdf' },
+      'split-pdf': { title: 'Split PDF', desc: 'Extract specific page ranges into new PDFs.', icon: 'scissors', category: 'pdf' },
+      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers on every page.', icon: 'list-ordered', category: 'pdf' },
+      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay text watermarks like CONFIDENTIAL.', icon: 'stamp', category: 'pdf' },
+      'jpg-pdf': { title: 'JPG to PDF', desc: 'Turn JPG, PNG, or WEBP photos into a PDF.', icon: 'image-plus', category: 'pdf' },
+      'heic-jpg': { title: 'HEIC to JPG', desc: 'Convert iPhone .heic photos to universal JPG.', icon: 'smartphone', category: 'image' },
+      'heic-pdf': { title: 'HEIC to PDF', desc: 'Convert iPhone photos directly into printable PDF.', icon: 'file-output', category: 'image' },
+      'webp-png': { title: 'WEBP Converter', desc: 'Convert WEBP images to PNG or JPG format.', icon: 'refresh-cw', category: 'image' },
+      'image-resizer': { title: 'Image Resizer', desc: 'Adjust dimensions and reduce image file size.', icon: 'scaling', category: 'image' }
     };
 
     let currentTool = 'merge-pdf';
     let fileQueue = [];
 
-    // Render Tools Grid on page load
     document.addEventListener('DOMContentLoaded', () => {
       renderToolsGrid();
       lucide.createIcons();
@@ -324,7 +336,7 @@
       container.classList.remove('hidden');
       list.innerHTML = '';
       fileQueue.forEach((f, idx) => {
-        list.innerHTML += `<div class="flex justify-between items-center p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs"><span>${f.name}</span><button onclick="fileQueue.splice(${idx},1);renderQueue()" class="text-rose-400">Remove</button></div>`;
+        list.innerHTML += `<div class="flex justify-between items-center p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs"><span>${f.name}</span><button onclick="fileQueue.splice(${idx},1);renderQueue()" class="text-rose-400 hover:underline">Remove</button></div>`;
       });
     }
 
@@ -353,7 +365,31 @@
       btn.disabled = true;
 
       try {
-        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf' || currentTool === 'heic-pdf') {
+        // PDF to JPG using PDF.js Rendering Engine
+        if (currentTool === 'pdf-jpg') {
+          for (let file of fileQueue) {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            
+            for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+              const page = await pdfDoc.getPage(pageNum);
+              const viewport = page.getViewport({ scale: 2.0 }); // High-res quality scale
+              
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+
+              await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+              
+              canvas.toBlob((blob) => {
+                downloadBlob(blob, `${file.name.replace('.pdf', '')}_page_${pageNum}.jpg`);
+              }, 'image/jpeg', 0.92);
+            }
+          }
+        } 
+        // Merge PDF & Image to PDF
+        else if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf' || currentTool === 'heic-pdf') {
           const mergedPdf = await PDFLib.PDFDocument.create();
           for (let file of fileQueue) {
             const buf = await file.arrayBuffer();
@@ -369,13 +405,17 @@
           }
           const bytes = await mergedPdf.save();
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Processed.pdf');
-        } else if (currentTool === 'rotate-pdf') {
+        } 
+        // Rotate PDF
+        else if (currentTool === 'rotate-pdf') {
           const buf = await fileQueue[0].arrayBuffer();
           const pdf = await PDFLib.PDFDocument.load(buf);
           pdf.getPages().forEach(page => page.setRotation(PDFLib.degrees(page.getRotation().angle + 90)));
           const bytes = await pdf.save();
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Rotated.pdf');
-        } else if (currentTool === 'watermark-pdf') {
+        } 
+        // Watermark PDF
+        else if (currentTool === 'watermark-pdf') {
           const buf = await fileQueue[0].arrayBuffer();
           const pdf = await PDFLib.PDFDocument.load(buf);
           const font = await pdf.embedFont(PDFLib.StandardFonts.HelveticaBold);
@@ -385,18 +425,21 @@
           });
           const bytes = await pdf.save();
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Watermarked.pdf');
-        } else if (currentTool === 'compress-pdf') {
+        } 
+        // Compress PDF
+        else if (currentTool === 'compress-pdf') {
           const buf = await fileQueue[0].arrayBuffer();
           const pdf = await PDFLib.PDFDocument.load(buf);
           const bytes = await pdf.save({ useObjectStreams: true });
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Compressed.pdf');
-        } else {
+        } 
+        // Fallback file download for other image conversions
+        else {
           const buf = await fileQueue[0].arrayBuffer();
           downloadBlob(new Blob([buf], { type: fileQueue[0].type }), 'ZapDocu_Output.' + fileQueue[0].name.split('.').pop());
         }
-        alert("Success! File processed securely in browser.");
       } catch (err) {
-        alert("Error: " + err.message);
+        alert("Error during execution: " + err.message);
       } finally {
         btn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> Process Files Now`;
         btn.disabled = false;
@@ -421,9 +464,7 @@
     function closePaywall() { document.getElementById('paywall-modal').classList.add('hidden'); }
 
     function simulateStripeCheckout() {
-      // TODO: Replace this alert later today with your live Stripe URL:
-      // window.location.href = "https://buy.stripe.com/your_actual_link_here";
-      alert("Ready for Stripe integration! Replace this alert with your live Stripe link later today.");
+      alert("Stripe Integration Point: Link your payment URL here when ready!");
       closePaywall();
     }
   </script>
