@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZapDocu — 100% Private Client-Side PDF & Image Utilities | Fast Browser Processing</title>
   <meta name="description" content="ZapDocu is the fastest offline-first private PDF and image utility tool. Merge, split, compress PDFs and convert HEIC photos instantly in your browser memory with zero server uploads." />
+  <meta name="keywords" content="private pdf merger, client side pdf compression, heic to jpg browser converter, secure pdf tools online, offline pdf toolkit" />
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +40,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-  <!-- Header with Landing Page Links -->
+  <!-- Header with Navigation Links -->
   <header class="sticky top-0 z-40 border-b border-slate-800/80 glass-card">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTool('merge-pdf')">
@@ -54,11 +55,11 @@
         </div>
       </div>
       
-      <!-- Top Navigation Links for Dedicated Pages -->
+      <!-- Top Navigation Links -->
       <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-300">
-        <a href="#workspace" class="hover:text-white transition">Tools</a>
-        <!-- Example link for future separate landing pages: change href to "compress.html" later -->
+        <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF</a>
         <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF</a>
+        <a href="#workspace" onclick="switchTool('heic-jpg')" class="hover:text-brand-400 transition">HEIC to JPG</a>
         <a href="#workspace" onclick="switchTool('jpg-pdf')" class="hover:text-brand-400 transition">Image to PDF</a>
         <a href="#pricing" class="hover:text-white transition">Pricing</a>
       </nav>
@@ -67,7 +68,6 @@
         <div class="hidden lg:flex items-center gap-1.5 text-xs text-accent-emerald bg-accent-emerald/10 px-3 py-1.5 rounded-full border border-accent-emerald/20">
           <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 100% In-Browser Privacy
         </div>
-        <!-- Stripe Upgrade Trigger Button -->
         <button onclick="openPaywall('Upgrade to Pro')" class="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 transition shadow-md shadow-brand-600/30 flex items-center gap-2">
           <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i> Upgrade Pro
         </button>
@@ -78,7 +78,7 @@
   <!-- Main Content -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
-    <!-- SEO Optimized Hero Section -->
+    <!-- Hero Section -->
     <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
         <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
@@ -142,215 +142,63 @@
       </div>
     </section>
 
-    <!-- Tool Grid Section -->
+    <!-- Expanded 8-Tool Suite Grid -->
     <section class="space-y-6">
-      <h2 class="text-2xl font-bold tracking-tight text-slate-100">All Utility Tools</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div onclick="switchTool('merge-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight text-slate-100">All Utility Tools</h2>
+          <p class="text-xs text-slate-400">Select any utility below to instantly switch your active browser workspace.</p>
+        </div>
+        <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+          <button id="tab-all" onclick="filterTools('all')" class="px-3 py-1 rounded-lg bg-brand-600 text-white font-medium">All Tools</button>
+          <button id="tab-pdf" onclick="filterTools('pdf')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200">PDF Suite</button>
+          <button id="tab-image" onclick="filterTools('image')" class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200">Image & HEIC</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="toolsGrid">
+        
+        <!-- Tool 1: Merge PDF -->
+        <div data-category="pdf" onclick="switchTool('merge-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center"><i data-lucide="file-plus-2" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Merge PDF</h3>
-          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order securely.</p>
+          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order into one file.</p>
         </div>
-        <div onclick="switchTool('compress-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+
+        <!-- Tool 2: Compress PDF -->
+        <div data-category="pdf" onclick="switchTool('compress-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center"><i data-lucide="file-digit" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Compress PDF</h3>
-          <p class="text-xs text-slate-400">Reduce file size while keeping visual quality intact.</p>
+          <p class="text-xs text-slate-400">Reduce file size while preserving optimum page quality.</p>
         </div>
-        <div onclick="switchTool('split-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+
+        <!-- Tool 3: Split PDF -->
+        <div data-category="pdf" onclick="switchTool('split-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center"><i data-lucide="scissors" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Split PDF</h3>
-          <p class="text-xs text-slate-400">Extract pages or create single-page breakdowns.</p>
+          <p class="text-xs text-slate-400">Extract specific page ranges into separate documents.</p>
         </div>
-        <div onclick="switchTool('jpg-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+
+        <!-- Tool 4: JPG / PNG to PDF -->
+        <div data-category="pdf" onclick="switchTool('jpg-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20 flex items-center justify-center"><i data-lucide="image-plus" class="w-5 h-5"></i></div>
-          <h3 class="font-bold text-slate-200">JPG/HEIC to PDF</h3>
-          <p class="text-xs text-slate-400">Turn phone pictures into clean printable PDFs instantly.</p>
+          <h3 class="font-bold text-slate-200">JPG to PDF</h3>
+          <p class="text-xs text-slate-400">Turn JPG, PNG, or WEBP photos into a single PDF document.</p>
         </div>
-      </div>
-    </section>
 
-    <!-- Pricing Section with Stripe Buttons -->
-    <section id="pricing" class="space-y-6 pt-6">
-      <div class="text-center max-w-xl mx-auto space-y-2">
-        <h2 class="text-3xl font-extrabold text-slate-100">Simple, Transparent Pricing</h2>
-        <p class="text-xs text-slate-400">Process files for free or upgrade to Pro for unlimited batch handling.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div class="glass-card p-8 rounded-2xl space-y-6 border border-slate-800 flex flex-col justify-between">
-          <div class="space-y-4">
-            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold">Free Starter</span>
-            <div class="text-4xl font-extrabold text-slate-100">$0 <span class="text-xs text-slate-400">/ forever</span></div>
-            <ul class="space-y-3 text-xs text-slate-300">
-              <li>✓ Up to 3 files per batch</li>
-              <li>✓ 100% In-browser privacy</li>
-            </ul>
-          </div>
-          <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full py-2.5 rounded-xl border border-slate-700 text-xs font-semibold text-slate-200">Use Free Version</button>
+        <!-- Tool 5: HEIC to JPG -->
+        <div data-category="image" onclick="switchTool('heic-jpg')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-accent-emerald/10 text-accent-emerald border border-accent-emerald/20 flex items-center justify-center"><i data-lucide="smartphone" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">HEIC to JPG</h3>
+          <p class="text-xs text-slate-400">Convert iPhone `.heic` photos to universal JPG files.</p>
         </div>
-        <div class="gradient-border shadow-2xl flex flex-col justify-between">
-          <div class="bg-slate-900 rounded-[15px] p-8 space-y-6">
-            <div class="space-y-4">
-              <span class="px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 text-xs font-semibold border border-brand-500/30">Pro Unlimited</span>
-              <div class="text-4xl font-extrabold text-slate-100">$4.99 <span class="text-xs text-slate-400">/ month</span></div>
-              <ul class="space-y-3 text-xs text-slate-200">
-                <li>✓ Unlimited batch file uploads</li>
-                <li>✓ Ad-free experience & priority execution</li>
-              </ul>
-            </div>
-            <!-- Direct Stripe Link Button -->
-            <button onclick="openPaywall('Pro Unlimited Subscription')" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg shadow-brand-500/30">Upgrade via Stripe</button>
-          </div>
+
+        <!-- Tool 6: HEIC to PDF -->
+        <div data-category="image" onclick="switchTool('heic-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center"><i data-lucide="file-output" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">HEIC to PDF</h3>
+          <p class="text-xs text-slate-400">Convert iPhone photos directly into a printable PDF document.</p>
         </div>
-      </div>
-    </section>
 
-  </main>
-
-  <!-- Footer with SEO Landing Links -->
-  <footer class="border-t border-slate-800/80 bg-slate-950 py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-        <p>&copy; 2026 ZapDocu.com • Powered by Cloudflare Edge & Client-Side Browser Security.</p>
-        <div class="flex items-center space-x-6">
-          <a href="#workspace" class="hover:text-slate-300 transition">Privacy Policy</a>
-          <a href="#pricing" class="hover:text-slate-300 transition">Stripe Billing Terms</a>
-        </div>
-      </div>
-      <!-- SEO Footer Landing Links Container -->
-      <div class="border-t border-slate-900 pt-6 flex flex-wrap gap-4 text-[11px] text-slate-600">
-        <span class="text-slate-400 font-semibold">Popular Workflows:</span>
-        <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF Online</a>
-        <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF Size</a>
-        <a href="#workspace" onclick="switchTool('split-pdf')" class="hover:text-brand-400 transition">Split PDF Pages</a>
-        <a href="#workspace" onclick="switchTool('jpg-pdf')" class="hover:text-brand-400 transition">Image to PDF Converter</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Paywall / Stripe Modal -->
-  <div id="paywall-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="gradient-border max-w-md w-full">
-      <div class="bg-slate-900 rounded-[15px] p-6 space-y-6 relative">
-        <button onclick="closePaywall()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-        <h3 id="paywall-title" class="text-xl font-bold text-slate-100 text-center">Upgrade to Pro</h3>
-        <p class="text-xs text-slate-400 text-center">Unlock unlimited batch processing and secure cloud checkout via Stripe.</p>
-        <button onclick="simulateStripeCheckout()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg">Proceed to Secure Stripe Checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let currentTool = 'merge-pdf';
-    let fileQueue = [];
-
-    document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
-
-    function switchTool(toolKey) {
-      currentTool = toolKey;
-      const titles = {
-        'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents securely.' },
-        'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size locally.' },
-        'split-pdf': { title: 'Split PDF Document', desc: 'Extract pages instantly.' },
-        'jpg-pdf': { title: 'Image to PDF Converter', desc: 'Convert pictures into clean PDFs.' }
-      };
-      document.getElementById('active-tool-title').innerText = titles[toolKey].title;
-      document.getElementById('active-tool-desc').innerText = titles[toolKey].desc;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function handleFileSelect(e) {
-      if (e.target.files.length > 0) {
-        fileQueue = [...fileQueue, ...Array.from(e.target.files)];
-        renderQueue();
-      }
-    }
-
-    function handleFileDrop(e) {
-      e.preventDefault();
-      if (e.dataTransfer.files.length > 0) {
-        fileQueue = [...fileQueue, ...Array.from(e.dataTransfer.files)];
-        renderQueue();
-      }
-    }
-
-    function renderQueue() {
-      const container = document.getElementById('file-queue-container');
-      const list = document.getElementById('file-queue-list');
-      document.getElementById('queue-count').innerText = fileQueue.length;
-      container.classList.remove('hidden');
-      list.innerHTML = '';
-      fileQueue.forEach((f, idx) => {
-        list.innerHTML += `<div class="flex justify-between items-center p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs"><span>${f.name}</span><button onclick="fileQueue.splice(${idx},1);renderQueue()" class="text-rose-400">Remove</button></div>`;
-      });
-    }
-
-    function clearQueue() { fileQueue = []; renderQueue(); }
-
-    async function executeToolProcess() {
-      if (fileQueue.length === 0) return;
-      const btn = document.getElementById('process-btn');
-      btn.innerText = "Processing locally...";
-      btn.disabled = true;
-
-      try {
-        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf') {
-          const mergedPdf = await PDFLib.PDFDocument.create();
-          for (let file of fileQueue) {
-            const buf = await file.arrayBuffer();
-            if (file.type === 'application/pdf') {
-              const pdf = await PDFLib.PDFDocument.load(buf);
-              const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-              pages.forEach(p => mergedPdf.addPage(p));
-            } else if (file.type.startsWith('image/')) {
-              const img = file.type === 'image/png' ? await mergedPdf.embedPng(buf) : await mergedPdf.embedJpg(buf);
-              const page = mergedPdf.addPage([img.width, img.height]);
-              page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
-            }
-          }
-          const bytes = await mergedPdf.save();
-          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Processed.pdf');
-        } else if (currentTool === 'compress-pdf') {
-          const buf = await fileQueue[0].arrayBuffer();
-          const pdf = await PDFLib.PDFDocument.load(buf);
-          const bytes = await pdf.save({ useObjectStreams: true });
-          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Compressed.pdf');
-        } else {
-          const buf = await fileQueue[0].arrayBuffer();
-          downloadBlob(new Blob([buf], { type: fileQueue[0].type }), 'ZapDocu_Output.' + fileQueue[0].name.split('.').pop());
-        }
-        alert("Success! File processed securely in browser.");
-      } catch (err) {
-        alert("Error: " + err.message);
-      } finally {
-        btn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> Process Files Now`;
-        btn.disabled = false;
-        lucide.createIcons();
-      }
-    }
-
-    function downloadBlob(blob, filename) {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = filename;
-      document.body.appendChild(a); a.click();
-      document.body.removeChild(a); URL.revokeObjectURL(url);
-    }
-
-    function openPaywall(title) {
-      document.getElementById('paywall-title').innerText = title;
-      document.getElementById('paywall-modal').classList.remove('hidden');
-    }
-
-    function closePaywall() {
-      document.getElementById('paywall-modal').classList.add('hidden');
-    }
-
-    function simulateStripeCheckout() {
-      // TODO: LATER TODAY, replace the alert below with your actual Stripe Payment Link URL:
-      // window.location.href = "https://buy.stripe.com/your_actual_link_here";
-      alert("Stripe Link integration point! Replace this alert with your live Stripe URL later today.");
-      closePaywall();
-    }
-  </script>
-</body>
-</html>
+        <!-- Tool 7: WEBP Converter -->
+        <div data-category="image" onclick="
