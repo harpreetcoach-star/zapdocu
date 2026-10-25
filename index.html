@@ -46,9 +46,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-  <!-- ================================================================= -->
-  <!-- SECTION 1: HEADER & NAVIGATION                                   -->
-  <!-- ================================================================= -->
+  <!-- SECTION 1: HEADER & NAVIGATION -->
   <header class="sticky top-0 z-40 border-b border-slate-800/80 glass-card">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3 cursor-pointer" onclick="selectTool('merge-pdf')">
@@ -83,12 +81,8 @@
     </div>
   </header>
 
-  <!-- ================================================================= -->
-  <!-- SECTION 2: HERO & ACTIVE WORKSPACE                                -->
-  <!-- ================================================================= -->
+  <!-- SECTION 2: HERO & ACTIVE WORKSPACE -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-
-    <!-- Hero -->
     <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
         <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
@@ -151,12 +145,7 @@
       </div>
     </section>
 
-    <!-- Hidden Canvas Container for PDF.js Rendering -->
-    <div id="pdf-canvas-container" class="hidden"></div>
-
-    <!-- ================================================================= -->
-    <!-- SECTION 3: ALL UTILITY TOOLS GRID                                -->
-    <!-- ================================================================= -->
+    <!-- SECTION 3: ALL UTILITY TOOLS GRID -->
     <section class="space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
         <div>
@@ -170,13 +159,10 @@
         </div>
       </div>
 
-      <!-- Tools Grid (Dynamically rendered by JS) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="toolsGrid"></div>
     </section>
 
-    <!-- ================================================================= -->
-    <!-- SECTION 4: PRICING SECTION                                        -->
-    <!-- ================================================================= -->
+    <!-- SECTION 4: PRICING SECTION -->
     <section id="pricing" class="space-y-8 pt-8">
       <div class="text-center max-w-2xl mx-auto space-y-3">
         <span class="text-xs font-bold text-brand-400 uppercase tracking-widest bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Flexible Pricing Plans</span>
@@ -250,9 +236,7 @@
     </div>
   </div>
 
-  <!-- ================================================================= -->
-  <!-- JAVASCRIPT ENGINE & TOOL CONFIGURATION                            -->
-  <!-- ================================================================= -->
+  <!-- JAVASCRIPT ENGINE & TOOL CONFIGURATION -->
   <script>
     const toolsData = {
       'merge-pdf': { title: 'Merge PDF', desc: 'Combine multiple PDFs into one document.', icon: 'file-plus-2', category: 'pdf' },
@@ -263,10 +247,10 @@
       'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers on every page.', icon: 'list-ordered', category: 'pdf' },
       'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay text watermarks like CONFIDENTIAL.', icon: 'stamp', category: 'pdf' },
       'jpg-pdf': { title: 'JPG to PDF', desc: 'Turn JPG, PNG, or WEBP photos into a PDF.', icon: 'image-plus', category: 'pdf' },
-      'heic-jpg': { title: 'HEIC to JPG', desc: 'Convert iPhone .heic photos to universal JPG files instantly.', icon: 'smartphone', category: 'image', color: 'rose' },
+      'heic-jpg': { title: 'HEIC to JPG', desc: 'Convert iPhone .heic photos to universal JPG.', icon: 'smartphone', category: 'image' },
       'heic-pdf': { title: 'HEIC to PDF', desc: 'Convert iPhone photos directly into printable PDF.', icon: 'file-output', category: 'image' },
       'webp-png': { title: 'WEBP Converter', desc: 'Convert WEBP images to PNG or JPG format.', icon: 'refresh-cw', category: 'image' },
-      'image-resizer': { title: 'Image Resizer', desc: 'Resize and optimize dimensions of JPG/PNG images.', icon: 'scaling', category: 'image', color: 'amber' }
+      'image-resizer': { title: 'Image Resizer', desc: 'Adjust dimensions and reduce image file size.', icon: 'scaling', category: 'image' }
     };
 
     let currentTool = 'merge-pdf';
@@ -358,7 +342,6 @@
 
     async function executeToolProcess() {
       if (fileQueue.length === 0) return;
-
       if (!checkDailyLimit()) return;
 
       const btn = document.getElementById('process-btn');
@@ -366,48 +349,6 @@
       btn.disabled = true;
 
       try {
-        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf') {
-          const mergedPdf = await PDFLib.PDFDocument.create();
-          for (let file of fileQueue) {
-            const buf = await file.arrayBuffer();
-            if (file.type === 'application/pdf') {
-              const pdf = await PDFLib.PDFDocument.load(buf);
-              const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-              pages.forEach(p => mergedPdf.addPage(p));
-            } else if (file.type.startsWith('image/')) {
-              const img = file.type === 'image/png' ? await mergedPdf.embedPng(buf) : await mergedPdf.embedJpg(buf);
-              const page = mergedPdf.addPage([img.width, img.height]);
-              page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
-            }
-          }
-          const bytes = await mergedPdf.save();
-          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Processed.pdf');
-        
-        // ==========================================
-        // ADD IMAGE RESIZER LOGIC RIGHT HERE:
-        // ==========================================
-         else if (currentTool === 'image-resizer') {
-          for (let file of fileQueue) {
-            const img = await createImageBitmap(file);
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width * 0.8;  // Scales down width by 80%
-            canvas.height = img.height * 0.8; // Scales down height by 80%
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            await new Promise(resolve => {
-              canvas.toBlob(blob => {
-                downloadBlob(blob, 'ZapDocu_Resized_' + file.name);
-                resolve();
-              }, file.type || 'image/jpeg', 0.85);
-            });
-          }
-        // ==========================================
-
-        } else if (currentTool === 'rotate-pdf') {
-          // ... (rest of your existing code continues below)
-
-      try {
-        // PDF to JPG using PDF.js Rendering Engine
         if (currentTool === 'pdf-jpg') {
           for (let file of fileQueue) {
             const arrayBuffer = await file.arrayBuffer();
@@ -415,7 +356,7 @@
             
             for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
               const page = await pdfDoc.getPage(pageNum);
-              const viewport = page.getViewport({ scale: 2.0 }); // High-res quality scale
+              const viewport = page.getViewport({ scale: 2.0 });
               
               const canvas = document.createElement('canvas');
               const ctx = canvas.getContext('2d');
@@ -430,7 +371,6 @@
             }
           }
         } 
-        // Merge PDF & Image to PDF
         else if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf' || currentTool === 'heic-pdf') {
           const mergedPdf = await PDFLib.PDFDocument.create();
           for (let file of fileQueue) {
@@ -448,7 +388,6 @@
           const bytes = await mergedPdf.save();
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Processed.pdf');
         } 
-        // Rotate PDF
         else if (currentTool === 'rotate-pdf') {
           const buf = await fileQueue[0].arrayBuffer();
           const pdf = await PDFLib.PDFDocument.load(buf);
@@ -456,7 +395,6 @@
           const bytes = await pdf.save();
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Rotated.pdf');
         } 
-        // Watermark PDF
         else if (currentTool === 'watermark-pdf') {
           const buf = await fileQueue[0].arrayBuffer();
           const pdf = await PDFLib.PDFDocument.load(buf);
@@ -468,14 +406,28 @@
           const bytes = await pdf.save();
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Watermarked.pdf');
         } 
-        // Compress PDF
         else if (currentTool === 'compress-pdf') {
           const buf = await fileQueue[0].arrayBuffer();
           const pdf = await PDFLib.PDFDocument.load(buf);
           const bytes = await pdf.save({ useObjectStreams: true });
           downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Compressed.pdf');
         } 
-        // Fallback file download for other image conversions
+        else if (currentTool === 'image-resizer') {
+          for (let file of fileQueue) {
+            const img = await createImageBitmap(file);
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width * 0.8;
+            canvas.height = img.height * 0.8;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            await new Promise(resolve => {
+              canvas.toBlob(blob => {
+                downloadBlob(blob, 'ZapDocu_Resized_' + file.name);
+                resolve();
+              }, file.type || 'image/jpeg', 0.85);
+            });
+          }
+        }
         else {
           const buf = await fileQueue[0].arrayBuffer();
           downloadBlob(new Blob([buf], { type: fileQueue[0].type }), 'ZapDocu_Output.' + fileQueue[0].name.split('.').pop());
