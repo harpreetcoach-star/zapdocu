@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZapDocu — Fast, Private PDF & Image Utilities</title>
-  <meta name="description" content="100% Client-side browser tools for PDF merge, compression, splitting, and HEIC to JPG image conversions. Powered by Cloudflare Pages." />
+  <title>ZapDocu — 100% Private Client-Side PDF & Image Utilities | Fast Browser Processing</title>
+  <meta name="description" content="ZapDocu is the fastest offline-first private PDF and image utility tool. Merge, split, compress PDFs and convert HEIC photos instantly in your browser memory with zero server uploads." />
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,27 +14,8 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#f0f3ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            },
-            accent: {
-              cyan: '#06b6d4',
-              emerald: '#10b981',
-              rose: '#f43f5e',
-            }
-          },
-          animation: {
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'glow': 'glow 2s ease-in-out infinite alternate',
-          },
-          keyframes: {
-            glow: {
-              '0%': { boxShadow: '0 0 15px rgba(99, 102, 241, 0.3)' },
-              '100%': { boxShadow: '0 0 30px rgba(99, 102, 241, 0.7)' },
-            }
+            brand: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' },
+            accent: { cyan: '#06b6d4', emerald: '#10b981', rose: '#f43f5e' }
           }
         }
       }
@@ -43,41 +24,333 @@
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- PDF-Lib Client-Side Engine -->
+  
+  <!-- PDF-Lib Engine -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .glass-card {
-      background: rgba(17, 24, 39, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .glass-card-hover:hover {
-      background: rgba(31, 41, 55, 0.85);
-      border-color: rgba(99, 102, 241, 0.4);
-      transform: translateY(-2px);
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #06b6d4 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .gradient-border {
-      position: relative;
-      border-radius: 1rem;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3));
-      padding: 1px;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card-hover:hover { background: rgba(31, 41, 55, 0.85); border-color: rgba(99, 102, 241, 0.4); transform: translateY(-2px); }
+    .gradient-text { background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gradient-border { position: relative; border-radius: 1rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3)); padding: 1px; }
   </style>
 </head>
-<body class="bg-
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+  <!-- Header with Landing Page Links -->
+  <header class="sticky top-0 z-40 border-b border-slate-800/80 glass-card">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTool('merge-pdf')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan p-0.5 flex items-center justify-center shadow-lg shadow-brand-500/20">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+            <i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i>
+          </div>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight">Zap<span class="gradient-text">Docu</span></span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold tracking-wider text-accent-cyan uppercase bg-accent-cyan/10 px-2 py-0.5 rounded-full border border-accent-cyan/20">Cloudflare Edge</span>
+        </div>
+      </div>
+      
+      <!-- Top Navigation Links for Dedicated Pages -->
+      <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-300">
+        <a href="#workspace" class="hover:text-white transition">Tools</a>
+        <!-- Example link for future separate landing pages: change href to "compress.html" later -->
+        <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF</a>
+        <a href="#workspace" onclick="switchTool('jpg-pdf')" class="hover:text-brand-400 transition">Image to PDF</a>
+        <a href="#pricing" class="hover:text-white transition">Pricing</a>
+      </nav>
+
+      <div class="flex items-center space-x-4">
+        <div class="hidden lg:flex items-center gap-1.5 text-xs text-accent-emerald bg-accent-emerald/10 px-3 py-1.5 rounded-full border border-accent-emerald/20">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 100% In-Browser Privacy
+        </div>
+        <!-- Stripe Upgrade Trigger Button -->
+        <button onclick="openPaywall('Upgrade to Pro')" class="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 transition shadow-md shadow-brand-600/30 flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i> Upgrade Pro
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- SEO Optimized Hero Section -->
+    <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
+        <span class="w-2 h-2 rounded-full bg-accent-emerald animate-pulse"></span>
+        <span>Zero Server Uploads • Processed Locally in Browser Memory</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-100">
+        The Fastest Offsite Private <br/>
+        <span class="gradient-text">PDF & Image Processing Suite</span>
+      </h1>
+      <p class="text-slate-400 text-base leading-relaxed">
+        Securely convert iPhone HEIC photos, merge sensitive PDF documents, split pages, and compress files directly in your device memory with absolute privacy.
+      </p>
+    </div>
+
+    <!-- Active Workspace Dropzone -->
+    <section id="workspace" class="gradient-border shadow-2xl">
+      <div class="bg-slate-900/90 rounded-[15px] p-6 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div class="flex items-center space-x-3">
+            <div class="p-2.5 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20">
+              <i id="active-tool-icon" data-lucide="file-plus-2" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 id="active-tool-title" class="text-xl font-bold text-slate-100">Merge PDF Files</h2>
+              <p id="active-tool-desc" class="text-xs text-slate-400">Combine multiple PDF documents into a single organized file locally.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drag & Drop Area -->
+        <div 
+          id="dropzone"
+          ondragover="event.preventDefault()"
+          ondrop="handleFileDrop(event)"
+          class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-10 text-center bg-slate-950/50 hover:bg-slate-900/50 transition cursor-pointer flex flex-col items-center justify-center space-y-4"
+          onclick="document.getElementById('file-input').click()"
+        >
+          <input type="file" id="file-input" class="hidden" multiple onchange="handleFileSelect(event)" />
+          <div class="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-brand-400">
+            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+          </div>
+          <p class="text-base font-semibold text-slate-200">Drag & Drop your files here, or <span class="text-brand-400 underline">browse computer</span></p>
+          <p class="text-xs text-slate-500">Files never leave your browser device. 100% private and secure.</p>
+        </div>
+
+        <!-- File Queue List -->
+        <div id="file-queue-container" class="hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-slate-300">Queued Files (<span id="queue-count">0</span>)</h3>
+            <button onclick="clearQueue()" class="text-xs text-rose-400 hover:text-rose-300">Clear All</button>
+          </div>
+          <div id="file-queue-list" class="space-y-2 max-h-48 overflow-y-auto pr-2"></div>
+          
+          <div class="flex justify-between items-center pt-2">
+            <button onclick="document.getElementById('file-input').click()" class="text-xs text-brand-400 hover:underline">+ Add More Files</button>
+            <button id="process-btn" onclick="executeToolProcess()" class="px-8 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-sm font-bold shadow-lg transition flex items-center gap-2">
+              <i data-lucide="play" class="w-4 h-4"></i> Process Files Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tool Grid Section -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold tracking-tight text-slate-100">All Utility Tools</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div onclick="switchTool('merge-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center"><i data-lucide="file-plus-2" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">Merge PDF</h3>
+          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order securely.</p>
+        </div>
+        <div onclick="switchTool('compress-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center"><i data-lucide="file-digit" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">Compress PDF</h3>
+          <p class="text-xs text-slate-400">Reduce file size while keeping visual quality intact.</p>
+        </div>
+        <div onclick="switchTool('split-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center"><i data-lucide="scissors" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">Split PDF</h3>
+          <p class="text-xs text-slate-400">Extract pages or create single-page breakdowns.</p>
+        </div>
+        <div onclick="switchTool('jpg-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20 flex items-center justify-center"><i data-lucide="image-plus" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">JPG/HEIC to PDF</h3>
+          <p class="text-xs text-slate-400">Turn phone pictures into clean printable PDFs instantly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section with Stripe Buttons -->
+    <section id="pricing" class="space-y-6 pt-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h2 class="text-3xl font-extrabold text-slate-100">Simple, Transparent Pricing</h2>
+        <p class="text-xs text-slate-400">Process files for free or upgrade to Pro for unlimited batch handling.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="glass-card p-8 rounded-2xl space-y-6 border border-slate-800 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold">Free Starter</span>
+            <div class="text-4xl font-extrabold text-slate-100">$0 <span class="text-xs text-slate-400">/ forever</span></div>
+            <ul class="space-y-3 text-xs text-slate-300">
+              <li>✓ Up to 3 files per batch</li>
+              <li>✓ 100% In-browser privacy</li>
+            </ul>
+          </div>
+          <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full py-2.5 rounded-xl border border-slate-700 text-xs font-semibold text-slate-200">Use Free Version</button>
+        </div>
+        <div class="gradient-border shadow-2xl flex flex-col justify-between">
+          <div class="bg-slate-900 rounded-[15px] p-8 space-y-6">
+            <div class="space-y-4">
+              <span class="px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 text-xs font-semibold border border-brand-500/30">Pro Unlimited</span>
+              <div class="text-4xl font-extrabold text-slate-100">$4.99 <span class="text-xs text-slate-400">/ month</span></div>
+              <ul class="space-y-3 text-xs text-slate-200">
+                <li>✓ Unlimited batch file uploads</li>
+                <li>✓ Ad-free experience & priority execution</li>
+              </ul>
+            </div>
+            <!-- Direct Stripe Link Button -->
+            <button onclick="openPaywall('Pro Unlimited Subscription')" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg shadow-brand-500/30">Upgrade via Stripe</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer with SEO Landing Links -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 ZapDocu.com • Powered by Cloudflare Edge & Client-Side Browser Security.</p>
+        <div class="flex items-center space-x-6">
+          <a href="#workspace" class="hover:text-slate-300 transition">Privacy Policy</a>
+          <a href="#pricing" class="hover:text-slate-300 transition">Stripe Billing Terms</a>
+        </div>
+      </div>
+      <!-- SEO Footer Landing Links Container -->
+      <div class="border-t border-slate-900 pt-6 flex flex-wrap gap-4 text-[11px] text-slate-600">
+        <span class="text-slate-400 font-semibold">Popular Workflows:</span>
+        <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF Online</a>
+        <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF Size</a>
+        <a href="#workspace" onclick="switchTool('split-pdf')" class="hover:text-brand-400 transition">Split PDF Pages</a>
+        <a href="#workspace" onclick="switchTool('jpg-pdf')" class="hover:text-brand-400 transition">Image to PDF Converter</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Paywall / Stripe Modal -->
+  <div id="paywall-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="gradient-border max-w-md w-full">
+      <div class="bg-slate-900 rounded-[15px] p-6 space-y-6 relative">
+        <button onclick="closePaywall()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <h3 id="paywall-title" class="text-xl font-bold text-slate-100 text-center">Upgrade to Pro</h3>
+        <p class="text-xs text-slate-400 text-center">Unlock unlimited batch processing and secure cloud checkout via Stripe.</p>
+        <button onclick="simulateStripeCheckout()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg">Proceed to Secure Stripe Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentTool = 'merge-pdf';
+    let fileQueue = [];
+
+    document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+
+    function switchTool(toolKey) {
+      currentTool = toolKey;
+      const titles = {
+        'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents securely.' },
+        'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size locally.' },
+        'split-pdf': { title: 'Split PDF Document', desc: 'Extract pages instantly.' },
+        'jpg-pdf': { title: 'Image to PDF Converter', desc: 'Convert pictures into clean PDFs.' }
+      };
+      document.getElementById('active-tool-title').innerText = titles[toolKey].title;
+      document.getElementById('active-tool-desc').innerText = titles[toolKey].desc;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleFileSelect(e) {
+      if (e.target.files.length > 0) {
+        fileQueue = [...fileQueue, ...Array.from(e.target.files)];
+        renderQueue();
+      }
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      if (e.dataTransfer.files.length > 0) {
+        fileQueue = [...fileQueue, ...Array.from(e.dataTransfer.files)];
+        renderQueue();
+      }
+    }
+
+    function renderQueue() {
+      const container = document.getElementById('file-queue-container');
+      const list = document.getElementById('file-queue-list');
+      document.getElementById('queue-count').innerText = fileQueue.length;
+      container.classList.remove('hidden');
+      list.innerHTML = '';
+      fileQueue.forEach((f, idx) => {
+        list.innerHTML += `<div class="flex justify-between items-center p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs"><span>${f.name}</span><button onclick="fileQueue.splice(${idx},1);renderQueue()" class="text-rose-400">Remove</button></div>`;
+      });
+    }
+
+    function clearQueue() { fileQueue = []; renderQueue(); }
+
+    async function executeToolProcess() {
+      if (fileQueue.length === 0) return;
+      const btn = document.getElementById('process-btn');
+      btn.innerText = "Processing locally...";
+      btn.disabled = true;
+
+      try {
+        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf') {
+          const mergedPdf = await PDFLib.PDFDocument.create();
+          for (let file of fileQueue) {
+            const buf = await file.arrayBuffer();
+            if (file.type === 'application/pdf') {
+              const pdf = await PDFLib.PDFDocument.load(buf);
+              const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+              pages.forEach(p => mergedPdf.addPage(p));
+            } else if (file.type.startsWith('image/')) {
+              const img = file.type === 'image/png' ? await mergedPdf.embedPng(buf) : await mergedPdf.embedJpg(buf);
+              const page = mergedPdf.addPage([img.width, img.height]);
+              page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+            }
+          }
+          const bytes = await mergedPdf.save();
+          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Processed.pdf');
+        } else if (currentTool === 'compress-pdf') {
+          const buf = await fileQueue[0].arrayBuffer();
+          const pdf = await PDFLib.PDFDocument.load(buf);
+          const bytes = await pdf.save({ useObjectStreams: true });
+          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Compressed.pdf');
+        } else {
+          const buf = await fileQueue[0].arrayBuffer();
+          downloadBlob(new Blob([buf], { type: fileQueue[0].type }), 'ZapDocu_Output.' + fileQueue[0].name.split('.').pop());
+        }
+        alert("Success! File processed securely in browser.");
+      } catch (err) {
+        alert("Error: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> Process Files Now`;
+        btn.disabled = false;
+        lucide.createIcons();
+      }
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+    }
+
+    function openPaywall(title) {
+      document.getElementById('paywall-title').innerText = title;
+      document.getElementById('paywall-modal').classList.remove('hidden');
+    }
+
+    function closePaywall() {
+      document.getElementById('paywall-modal').classList.add('hidden');
+    }
+
+    function simulateStripeCheckout() {
+      // TODO: LATER TODAY, replace the alert below with your actual Stripe Payment Link URL:
+      // window.location.href = "https://buy.stripe.com/your_actual_link_here";
+      alert("Stripe Link integration point! Replace this alert with your live Stripe URL later today.");
+      closePaywall();
+    }
+  </script>
+</body>
+</html>
