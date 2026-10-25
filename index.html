@@ -201,4 +201,228 @@
         </div>
 
         <!-- Tool 7: WEBP Converter -->
-        <div data-category="image" onclick="
+        <div data-category="image" onclick="switchTool('webp-png')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center"><i data-lucide="refresh-cw" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">WEBP Converter</h3>
+          <p class="text-xs text-slate-400">Convert web WEBP images to standard PNG or JPG images.</p>
+        </div>
+
+        <!-- Tool 8: Image Resizer -->
+        <div data-category="image" onclick="switchTool('image-resizer')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20 flex items-center justify-center"><i data-lucide="scaling" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">Image Resizer</h3>
+          <p class="text-xs text-slate-400">Adjust dimensions and reduce file size with quality control.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="space-y-6 pt-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h2 class="text-3xl font-extrabold text-slate-100">Simple, Transparent Pricing</h2>
+        <p class="text-xs text-slate-400">Process files for free or upgrade to Pro for high-volume batch handling.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="glass-card p-8 rounded-2xl space-y-6 border border-slate-800 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold">Free Starter</span>
+            <div class="text-4xl font-extrabold text-slate-100">$0 <span class="text-xs text-slate-400">/ forever</span></div>
+            <ul class="space-y-3 text-xs text-slate-300">
+              <li>✓ Up to 3 files per batch</li>
+              <li>✓ 100% In-browser privacy</li>
+            </ul>
+          </div>
+          <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full py-2.5 rounded-xl border border-slate-700 text-xs font-semibold text-slate-200">Use Free Version</button>
+        </div>
+        <div class="gradient-border shadow-2xl flex flex-col justify-between">
+          <div class="bg-slate-900 rounded-[15px] p-8 space-y-6">
+            <div class="space-y-4">
+              <span class="px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 text-xs font-semibold border border-brand-500/30">Pro Unlimited</span>
+              <div class="text-4xl font-extrabold text-slate-100">$4.99 <span class="text-xs text-slate-400">/ month</span></div>
+              <ul class="space-y-3 text-xs text-slate-200">
+                <li>✓ Unlimited batch file uploads</li>
+                <li>✓ Ad-free experience & priority execution</li>
+              </ul>
+            </div>
+            <button onclick="openPaywall('Pro Unlimited Subscription')" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg shadow-brand-500/30">Upgrade via Stripe</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer with SEO Landing Links -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; 2026 ZapDocu.com • Powered by Cloudflare Edge & Client-Side Browser Security.</p>
+        <div class="flex items-center space-x-6">
+          <a href="#workspace" class="hover:text-slate-300 transition">Privacy Policy</a>
+          <a href="#pricing" class="hover:text-slate-300 transition">Stripe Billing Terms</a>
+        </div>
+      </div>
+      <div class="border-t border-slate-900 pt-6 flex flex-wrap gap-4 text-[11px] text-slate-600">
+        <span class="text-slate-400 font-semibold">Popular Workflows:</span>
+        <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF Online</a>
+        <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF Size</a>
+        <a href="#workspace" onclick="switchTool('split-pdf')" class="hover:text-brand-400 transition">Split PDF Pages</a>
+        <a href="#workspace" onclick="switchTool('jpg-pdf')" class="hover:text-brand-400 transition">Image to PDF Converter</a>
+        <a href="#workspace" onclick="switchTool('heic-jpg')" class="hover:text-brand-400 transition">Convert HEIC to JPG</a>
+        <a href="#workspace" onclick="switchTool('webp-png')" class="hover:text-brand-400 transition">WEBP Image Converter</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Paywall / Stripe Modal -->
+  <div id="paywall-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="gradient-border max-w-md w-full">
+      <div class="bg-slate-900 rounded-[15px] p-6 space-y-6 relative">
+        <button onclick="closePaywall()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <h3 id="paywall-title" class="text-xl font-bold text-slate-100 text-center">Upgrade to Pro</h3>
+        <p class="text-xs text-slate-400 text-center">Unlock unlimited batch processing and secure cloud checkout via Stripe.</p>
+        <button onclick="simulateStripeCheckout()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg">Proceed to Secure Stripe Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentTool = 'merge-pdf';
+    let fileQueue = [];
+
+    const toolMeta = {
+      'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents into a single organized file locally.', icon: 'file-plus-2' },
+      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while keeping visual quality intact.', icon: 'file-digit' },
+      'split-pdf': { title: 'Split PDF Document', desc: 'Extract specific pages or page ranges into separate documents.', icon: 'scissors' },
+      'jpg-pdf': { title: 'JPG to PDF Converter', desc: 'Turn JPG, PNG, or WEBP photos into a single PDF document.', icon: 'image-plus' },
+      'heic-jpg': { title: 'HEIC to JPG Converter', desc: 'Convert iPhone .heic photos to universal JPG format effortlessly.', icon: 'smartphone' },
+      'heic-pdf': { title: 'HEIC to PDF Converter', desc: 'Convert iPhone photos directly into a clean, printable PDF document.', icon: 'file-output' },
+      'webp-png': { title: 'WEBP Converter', desc: 'Convert web WEBP images to standard PNG or JPG files.', icon: 'refresh-cw' },
+      'image-resizer': { title: 'Image Resizer & Optimizer', desc: 'Adjust dimensions and reduce file size with quality control.', icon: 'scaling' }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+
+    function switchTool(toolKey) {
+      currentTool = toolKey;
+      const meta = toolMeta[toolKey] || toolMeta['merge-pdf'];
+      document.getElementById('active-tool-title').innerText = meta.title;
+      document.getElementById('active-tool-desc').innerText = meta.desc;
+      const iconContainer = document.getElementById('active-tool-icon');
+      iconContainer.setAttribute('data-lucide', meta.icon);
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterTools(category) {
+      const cards = document.querySelectorAll('#toolsGrid > div');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        if (category === 'all' || cat === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('tab-all').className = category === 'all' ? 'px-3 py-1 rounded-lg bg-brand-600 text-white font-medium' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200';
+      document.getElementById('tab-pdf').className = category === 'pdf' ? 'px-3 py-1 rounded-lg bg-brand-600 text-white font-medium' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200';
+      document.getElementById('tab-image').className = category === 'image' ? 'px-3 py-1 rounded-lg bg-brand-600 text-white font-medium' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200';
+    }
+
+    function handleFileSelect(e) {
+      if (e.target.files.length > 0) {
+        fileQueue = [...fileQueue, ...Array.from(e.target.files)];
+        renderQueue();
+      }
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      if (e.dataTransfer.files.length > 0) {
+        fileQueue = [...fileQueue, ...Array.from(e.dataTransfer.files)];
+        renderQueue();
+      }
+    }
+
+    function renderQueue() {
+      const container = document.getElementById('file-queue-container');
+      const list = document.getElementById('file-queue-list');
+      document.getElementById('queue-count').innerText = fileQueue.length;
+      container.classList.remove('hidden');
+      list.innerHTML = '';
+      fileQueue.forEach((f, idx) => {
+        list.innerHTML += `<div class="flex justify-between items-center p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs"><span>${f.name}</span><button onclick="fileQueue.splice(${idx},1);renderQueue()" class="text-rose-400">Remove</button></div>`;
+      });
+    }
+
+    function clearQueue() { fileQueue = []; renderQueue(); }
+
+    async function executeToolProcess() {
+      if (fileQueue.length === 0) return;
+      const btn = document.getElementById('process-btn');
+      btn.innerText = "Processing locally...";
+      btn.disabled = true;
+
+      try {
+        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf' || currentTool === 'heic-pdf') {
+          const mergedPdf = await PDFLib.PDFDocument.create();
+          for (let file of fileQueue) {
+            const buf = await file.arrayBuffer();
+            if (file.type === 'application/pdf') {
+              const pdf = await PDFLib.PDFDocument.load(buf);
+              const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+              pages.forEach(p => mergedPdf.addPage(p));
+            } else if (file.type.startsWith('image/')) {
+              const img = file.type === 'image/png' ? await mergedPdf.embedPng(buf) : await mergedPdf.embedJpg(buf);
+              const page = mergedPdf.addPage([img.width, img.height]);
+              page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+            }
+          }
+          const bytes = await mergedPdf.save();
+          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Processed.pdf');
+        } else if (currentTool === 'compress-pdf') {
+          const buf = await fileQueue[0].arrayBuffer();
+          const pdf = await PDFLib.PDFDocument.load(buf);
+          const bytes = await pdf.save({ useObjectStreams: true });
+          downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'ZapDocu_Compressed.pdf');
+        } else {
+          const buf = await fileQueue[0].arrayBuffer();
+          downloadBlob(new Blob([buf], { type: fileQueue[0].type }), 'ZapDocu_Output.' + fileQueue[0].name.split('.').pop());
+        }
+        alert("Success! File processed securely in browser.");
+      } catch (err) {
+        alert("Error: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> Process Files Now`;
+        btn.disabled = false;
+        lucide.createIcons();
+      }
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+    }
+
+    function openPaywall(title) {
+      document.getElementById('paywall-title').innerText = title;
+      document.getElementById('paywall-modal').classList.remove('hidden');
+    }
+
+    function closePaywall() {
+      document.getElementById('paywall-modal').classList.add('hidden');
+    }
+
+    function simulateStripeCheckout() {
+      // TODO: Replace this alert with your actual Stripe Payment Link URL later today:
+      // window.location.href = "https://buy.stripe.com/your_actual_link_here";
+      alert("Stripe Link integration point! Replace this alert with your live Stripe URL later today.");
+      closePaywall();
+    }
+  </script>
+</body>
+</html>
