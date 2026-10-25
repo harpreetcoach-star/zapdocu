@@ -58,6 +58,7 @@
         <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF</a>
         <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress</a>
         <a href="#workspace" onclick="switchTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate</a>
+        <a href="#workspace" onclick="switchTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark</a>
         <a href="#pricing" class="hover:text-white transition">Pricing Plans</a>
       </nav>
 
@@ -100,7 +101,7 @@
             </div>
             <div>
               <h2 id="active-tool-title" class="text-xl font-bold text-slate-100">Merge PDF Files</h2>
-              <p id="active-tool-desc" class="text-xs text-slate-400">Combine multiple PDF documents into a single organized file locally.</p>
+              <p id="active-tool-desc" class="text-xs text-slate-400">Combine multiple PDF documents into a single organized file locally[cite: 1, 2, 3].</p>
             </div>
           </div>
         </div>
@@ -139,7 +140,7 @@
       </div>
     </section>
 
-    <!-- Utility Tools Grid -->
+    <!-- Full 12+ Utility Tools Grid -->
     <section class="space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
         <div>
@@ -157,47 +158,67 @@
         <div data-category="pdf" onclick="switchTool('merge-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center"><i data-lucide="file-plus-2" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Merge PDF</h3>
-          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order into one file.</p>
+          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order into one file[cite: 1, 2, 3].</p>
         </div>
         <div data-category="pdf" onclick="switchTool('compress-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center"><i data-lucide="file-digit" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Compress PDF</h3>
-          <p class="text-xs text-slate-400">Reduce file size while preserving optimum page quality.</p>
+          <p class="text-xs text-slate-400">Reduce file size while preserving optimum page quality[cite: 1, 2, 3].</p>
         </div>
         <div data-category="pdf" onclick="switchTool('rotate-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20 flex items-center justify-center"><i data-lucide="rotate-cw" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Rotate PDF</h3>
-          <p class="text-xs text-slate-400">Rotate landscape or upside-down PDF pages by 90 degrees.</p>
+          <p class="text-xs text-slate-400">Rotate landscape or upside-down PDF pages by 90 degrees[cite: 1, 2, 3].</p>
         </div>
         <div data-category="pdf" onclick="switchTool('split-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center"><i data-lucide="scissors" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Split PDF</h3>
-          <p class="text-xs text-slate-400">Extract specific page ranges into separate documents.</p>
+          <p class="text-xs text-slate-400">Extract specific page ranges into separate documents[cite: 1, 2, 3].</p>
         </div>
         <div data-category="pdf" onclick="switchTool('page-numbers')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center"><i data-lucide="list-ordered" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Add Page Numbers</h3>
-          <p class="text-xs text-slate-400">Stamp clean footer page numbers across all pages securely.</p>
+          <p class="text-xs text-slate-400">Stamp clean footer page numbers across all pages securely[cite: 1, 2, 3].</p>
         </div>
         <div data-category="pdf" onclick="switchTool('watermark-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center"><i data-lucide="stamp" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Watermark PDF</h3>
-          <p class="text-xs text-slate-400">Overlay professional text watermarks like CONFIDENTIAL.</p>
+          <p class="text-xs text-slate-400">Overlay professional text watermarks like CONFIDENTIAL[cite: 1, 2, 3].</p>
+        </div>
+        <div data-category="pdf" onclick="switchTool('pdf-jpg')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20 flex items-center justify-center"><i data-lucide="image" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">PDF to JPG</h3>
+          <p class="text-xs text-slate-400">Extract every page of your PDF into high-quality images.</p>
         </div>
         <div data-category="pdf" onclick="switchTool('jpg-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20 flex items-center justify-center"><i data-lucide="image-plus" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">JPG to PDF</h3>
-          <p class="text-xs text-slate-400">Turn JPG, PNG, or WEBP photos into a single PDF document.</p>
+          <p class="text-xs text-slate-400">Turn JPG, PNG, or WEBP photos into a single PDF document[cite: 1, 2, 3].</p>
         </div>
         <div data-category="image" onclick="switchTool('heic-jpg')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center"><i data-lucide="smartphone" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">HEIC to JPG</h3>
           <p class="text-xs text-slate-400">Convert iPhone .heic photos to universal JPG files effortlessly.</p>
         </div>
+        <div data-category="image" onclick="switchTool('heic-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center"><i data-lucide="file-output" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">HEIC to PDF</h3>
+          <p class="text-xs text-slate-400">Convert iPhone photos directly into a printable PDF document[cite: 1, 2, 3].</p>
+        </div>
+        <div data-category="image" onclick="switchTool('webp-png')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center"><i data-lucide="refresh-cw" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">WEBP Converter</h3>
+          <p class="text-xs text-slate-400">Convert web WEBP images to standard PNG or JPG files.</p>
+        </div>
+        <div data-category="image" onclick="switchTool('image-resizer')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center"><i data-lucide="scaling" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">Image Resizer</h3>
+          <p class="text-xs text-slate-400">Adjust dimensions and reduce file size with quality control.</p>
+        </div>
       </div>
     </section>
 
-    <!-- ENLARGED & PROMINENT PRICING SECTION -->
+    <!-- Pricing Section -->
     <section id="pricing" class="space-y-8 pt-8">
       <div class="text-center max-w-2xl mx-auto space-y-3">
         <span class="text-xs font-bold text-brand-400 uppercase tracking-widest bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Flexible Pricing Plans</span>
@@ -218,8 +239,8 @@
 
             <ul class="space-y-4 text-sm text-slate-300 pt-2">
               <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> <strong>20 Free Conversions</strong> every 24 hours</li>
-              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> 100% Client-Side Browser Privacy</li>
-              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> Access to all core PDF & image tools</li>
+              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> 100% Client-Side Browser Privacy[cite: 1, 2, 3]</li>
+              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> Access to all 12 core PDF & image tools</li>
             </ul>
           </div>
 
@@ -260,7 +281,7 @@
 
   </main>
 
-  <!-- Footer -->
+  <!-- Footer with SEO Landing Links -->
   <footer class="border-t border-slate-800/80 bg-slate-950 py-10 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
@@ -269,6 +290,15 @@
           <a href="#workspace" class="hover:text-slate-300 transition">Privacy Policy</a>
           <a href="#pricing" class="hover:text-slate-300 transition">Stripe Billing Terms</a>
         </div>
+      </div>
+      <div class="border-t border-slate-900 pt-6 flex flex-wrap gap-4 text-[11px] text-slate-600">
+        <span class="text-slate-400 font-semibold">Popular Workflows:</span>
+        <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF Online</a>
+        <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF Size</a>
+        <a href="#workspace" onclick="switchTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate PDF Pages</a>
+        <a href="#workspace" onclick="switchTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark PDF</a>
+        <a href="#workspace" onclick="switchTool('page-numbers')" class="hover:text-brand-400 transition">Add Page Numbers</a>
+        <a href="#workspace" onclick="switchTool('heic-jpg')" class="hover:text-brand-400 transition">HEIC to JPG Converter</a>
       </div>
     </div>
   </footer>
@@ -290,14 +320,18 @@
     let fileQueue = [];
 
     const toolMeta = {
-      'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents into a single organized file locally.', icon: 'file-plus-2' },
-      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while keeping visual quality intact.', icon: 'file-digit' },
-      'rotate-pdf': { title: 'Rotate PDF Pages', desc: 'Rotate pages by 90 degrees clockwise securely in your browser.', icon: 'rotate-cw' },
-      'split-pdf': { title: 'Split PDF Document', desc: 'Extract specific pages or page ranges into separate documents.', icon: 'scissors' },
-      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers across all pages of your PDF document.', icon: 'list-ordered' },
-      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay professional text watermarks securely across document pages.', icon: 'stamp' },
-      'jpg-pdf': { title: 'JPG to PDF Converter', desc: 'Turn JPG, PNG, or WEBP photos into a single PDF document.', icon: 'image-plus' },
-      'heic-jpg': { title: 'HEIC to JPG Converter', desc: 'Convert iPhone .heic photos to universal JPG format effortlessly.', icon: 'smartphone' }
+      'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents into a single organized file locally[cite: 1, 2, 3].', icon: 'file-plus-2' },
+      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while keeping visual quality intact[cite: 1, 2, 3].', icon: 'file-digit' },
+      'rotate-pdf': { title: 'Rotate PDF Pages', desc: 'Rotate pages by 90 degrees clockwise securely in your browser[cite: 1, 2, 3].', icon: 'rotate-cw' },
+      'split-pdf': { title: 'Split PDF Document', desc: 'Extract specific pages or page ranges into separate documents[cite: 1, 2, 3].', icon: 'scissors' },
+      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers across all pages of your PDF document[cite: 1, 2, 3].', icon: 'list-ordered' },
+      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay professional text watermarks securely across document pages[cite: 1, 2, 3].', icon: 'stamp' },
+      'pdf-jpg': { title: 'PDF to JPG', desc: 'Extract PDF pages into standalone downloadable image files.' },
+      'jpg-pdf': { title: 'JPG to PDF Converter', desc: 'Turn JPG, PNG, or WEBP photos into a single PDF document[cite: 1, 2, 3].', icon: 'image-plus' },
+      'heic-jpg': { title: 'HEIC to JPG Converter', desc: 'Convert iPhone .heic photos to universal JPG format effortlessly.', icon: 'smartphone' },
+      'heic-pdf': { title: 'HEIC to PDF Converter', desc: 'Convert iPhone photos directly into a clean, printable PDF document[cite: 1, 2, 3].', icon: 'file-output' },
+      'webp-png': { title: 'WEBP Converter', desc: 'Convert web WEBP images to standard PNG or JPG files.', icon: 'refresh-cw' },
+      'image-resizer': { title: 'Image Resizer & Optimizer', desc: 'Adjust dimensions and reduce file size with quality control.', icon: 'scaling' }
     };
 
     document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
@@ -378,7 +412,6 @@
     async function executeToolProcess() {
       if (fileQueue.length === 0) return;
 
-      // Enforce Free Daily Limit of 20 Files
       if (!checkDailyLimit()) return;
 
       const btn = document.getElementById('process-btn');
@@ -462,7 +495,7 @@
     }
 
     function simulateStripeCheckout() {
-      // TODO: Replace this alert later today with your live Stripe Payment Link URL:
+      // TODO: Replace this alert with your actual Stripe Payment Link URL later today:
       // window.location.href = "https://buy.stripe.com/your_actual_link_here";
       alert("Stripe Link integration point! Replace this alert with your live Stripe URL later today.");
       closePaywall();
