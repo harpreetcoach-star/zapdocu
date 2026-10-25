@@ -58,7 +58,8 @@
         <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF</a>
         <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress</a>
         <a href="#workspace" onclick="switchTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate</a>
-        <a href="#pricing" class="hover:text-white transition">Pricing Plans</a>
+        <a href="#workspace" onclick="switchTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark</a>
+        <a href="#pricing" class="hover:text-white transition">Pricing</a>
       </nav>
 
       <div class="flex items-center space-x-4">
@@ -73,7 +74,7 @@
   </header>
 
   <!-- Main Content -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
     <!-- Hero Section -->
     <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
@@ -139,7 +140,7 @@
       </div>
     </section>
 
-    <!-- Utility Tools Grid -->
+    <!-- Expanded 12+ Utility Tools Grid -->
     <section class="space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
         <div>
@@ -154,105 +155,123 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="toolsGrid">
+        
+        <!-- 1. Merge PDF -->
         <div data-category="pdf" onclick="switchTool('merge-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center"><i data-lucide="file-plus-2" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Merge PDF</h3>
-          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order into one file.</p>
+          <p class="text-xs text-slate-400">Combine multiple PDFs in your desired order into one file[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 2. Compress PDF -->
         <div data-category="pdf" onclick="switchTool('compress-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center"><i data-lucide="file-digit" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Compress PDF</h3>
-          <p class="text-xs text-slate-400">Reduce file size while preserving optimum page quality.</p>
+          <p class="text-xs text-slate-400">Reduce file size while preserving optimum page quality[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 3. Rotate PDF -->
         <div data-category="pdf" onclick="switchTool('rotate-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20 flex items-center justify-center"><i data-lucide="rotate-cw" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Rotate PDF</h3>
-          <p class="text-xs text-slate-400">Rotate landscape or upside-down PDF pages by 90 degrees.</p>
+          <p class="text-xs text-slate-400">Rotate landscape or upside-down PDF pages by 90 degrees[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 4. Split PDF -->
         <div data-category="pdf" onclick="switchTool('split-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center"><i data-lucide="scissors" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Split PDF</h3>
-          <p class="text-xs text-slate-400">Extract specific page ranges into separate documents.</p>
+          <p class="text-xs text-slate-400">Extract specific page ranges into separate documents[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 5. Add Page Numbers -->
         <div data-category="pdf" onclick="switchTool('page-numbers')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center"><i data-lucide="list-ordered" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Add Page Numbers</h3>
-          <p class="text-xs text-slate-400">Stamp clean footer page numbers across all pages securely.</p>
+          <p class="text-xs text-slate-400">Stamp clean footer page numbers across all pages securely[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 6. Watermark PDF -->
         <div data-category="pdf" onclick="switchTool('watermark-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center"><i data-lucide="stamp" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">Watermark PDF</h3>
-          <p class="text-xs text-slate-400">Overlay professional text watermarks like CONFIDENTIAL.</p>
+          <p class="text-xs text-slate-400">Overlay professional text watermarks like CONFIDENTIAL[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 7. PDF to JPG -->
+        <div data-category="pdf" onclick="switchTool('pdf-jpg')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20 flex items-center justify-center"><i data-lucide="image" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">PDF to JPG</h3>
+          <p class="text-xs text-slate-400">Extract every page of your PDF into high-quality images.</p>
+        </div>
+
+        <!-- 8. JPG to PDF -->
         <div data-category="pdf" onclick="switchTool('jpg-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20 flex items-center justify-center"><i data-lucide="image-plus" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">JPG to PDF</h3>
-          <p class="text-xs text-slate-400">Turn JPG, PNG, or WEBP photos into a single PDF document.</p>
+          <p class="text-xs text-slate-400">Turn JPG, PNG, or WEBP photos into a single PDF document[cite: 1, 2, 3].</p>
         </div>
+
+        <!-- 9. HEIC to JPG -->
         <div data-category="image" onclick="switchTool('heic-jpg')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
           <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center"><i data-lucide="smartphone" class="w-5 h-5"></i></div>
           <h3 class="font-bold text-slate-200">HEIC to JPG</h3>
           <p class="text-xs text-slate-400">Convert iPhone .heic photos to universal JPG files effortlessly.</p>
         </div>
+
+        <!-- 10. HEIC to PDF -->
+        <div data-category="image" onclick="switchTool('heic-pdf')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center"><i data-lucide="file-output" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">HEIC to PDF</h3>
+          <p class="text-xs text-slate-400">Convert iPhone photos directly into a printable PDF document[cite: 1, 2, 3].</p>
+        </div>
+
+        <!-- 11. WEBP Converter -->
+        <div data-category="image" onclick="switchTool('webp-png')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center"><i data-lucide="refresh-cw" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">WEBP Converter</h3>
+          <p class="text-xs text-slate-400">Convert web WEBP images to standard PNG or JPG files.</p>
+        </div>
+
+        <!-- 12. Image Resizer -->
+        <div data-category="image" onclick="switchTool('image-resizer')" class="tool-card glass-card glass-card-hover p-5 rounded-2xl cursor-pointer space-y-3 border border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center"><i data-lucide="scaling" class="w-5 h-5"></i></div>
+          <h3 class="font-bold text-slate-200">Image Resizer</h3>
+          <p class="text-xs text-slate-400">Adjust dimensions and reduce file size with quality control.</p>
+        </div>
+
       </div>
     </section>
 
-    <!-- ENLARGED & PROMINENT PRICING SECTION -->
-    <section id="pricing" class="space-y-8 pt-8">
-      <div class="text-center max-w-2xl mx-auto space-y-3">
-        <span class="text-xs font-bold text-brand-400 uppercase tracking-widest bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Flexible Pricing Plans</span>
-        <h2 class="text-4xl font-extrabold text-slate-100">Simple, Transparent Plans for Everyone</h2>
-        <p class="text-sm text-slate-400">Start free with up to 3 conversions every 24 hours, or upgrade for unlimited high-speed power.</p>
+    <!-- Pricing Section -->
+    <section id="pricing" class="space-y-6 pt-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h2 class="text-3xl font-extrabold text-slate-100">Simple, Transparent Pricing</h2>
+        <p class="text-xs text-slate-400">Process files for free or upgrade to Pro for high-volume batch handling.</p>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <!-- Free Starter Card -->
-        <div class="glass-card p-8 sm:p-10 rounded-3xl space-y-8 border border-slate-800 flex flex-col justify-between shadow-xl">
-          <div class="space-y-6">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-slate-800 text-slate-200 text-xs font-bold uppercase tracking-wider">Free Starter Tier</div>
-            <div class="flex items-baseline space-x-2">
-              <span class="text-5xl font-extrabold text-slate-100">$0</span>
-              <span class="text-sm text-slate-400">/ free forever</span>
-            </div>
-            <p class="text-sm text-slate-400">Ideal for students, personal tasks, and casual document formatting.</p>
-
-            <ul class="space-y-4 text-sm text-slate-300 pt-2">
-              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> <strong>3 Free Conversions</strong> every 24 hours</li>
-              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> 100% Client-Side Browser Privacy</li>
-              <li class="flex items-center gap-3"><i data-lucide="check" class="w-5 h-5 text-accent-emerald"></i> Access to all 12 core PDF & image tools</li>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="glass-card p-8 rounded-2xl space-y-6 border border-slate-800 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold">Free Starter</span>
+            <div class="text-4xl font-extrabold text-slate-100">$0 <span class="text-xs text-slate-400">/ forever</span></div>
+            <ul class="space-y-3 text-xs text-slate-300">
+              <li>✓ Up to 3 files per batch</li>
+              <li>✓ 100% In-browser privacy[cite: 1, 2, 3]</li>
             </ul>
           </div>
-
-          <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full py-4 rounded-2xl border border-slate-700 hover:bg-slate-800 text-sm font-bold text-slate-200 transition shadow-md">
-            Start Free Now
-          </button>
+          <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-full py-2.5 rounded-xl border border-slate-700 text-xs font-semibold text-slate-200">Use Free Version</button>
         </div>
-
-        <!-- Pro Unlimited Card (Highlighted) -->
-        <div class="relative gradient-border shadow-2xl flex flex-col justify-between scale-105">
-          <div class="bg-slate-900 rounded-[23px] p-8 sm:p-10 space-y-8 flex flex-col justify-between h-full">
-            <div class="space-y-6">
-              <div class="flex items-center justify-between">
-                <span class="px-4 py-1.5 rounded-full bg-brand-500/20 text-brand-300 text-xs font-bold uppercase tracking-wider border border-brand-500/30">Pro Unlimited</span>
-                <span class="text-[11px] font-extrabold text-amber-300 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">MOST POPULAR</span>
-              </div>
-              
-              <div class="flex items-baseline space-x-2">
-                <span class="text-5xl font-extrabold text-slate-100">$4.99</span>
-                <span class="text-sm text-slate-400">/ month</span>
-              </div>
-              <p class="text-sm text-slate-400">Designed for power users, professionals, and busy offices.</p>
-
-              <ul class="space-y-4 text-sm text-slate-200 pt-2">
-                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-brand-400"></i> <strong>Unlimited Daily Conversions</strong> (No daily cap)</li>
-                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-brand-400"></i> Priority browser processing & larger file batches</li>
-                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-brand-400"></i> 100% Ad-Free Experience</li>
+        <div class="gradient-border shadow-2xl flex flex-col justify-between">
+          <div class="bg-slate-900 rounded-[15px] p-8 space-y-6">
+            <div class="space-y-4">
+              <span class="px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 text-xs font-semibold border border-brand-500/30">Pro Unlimited</span>
+              <div class="text-4xl font-extrabold text-slate-100">$4.99 <span class="text-xs text-slate-400">/ month</span></div>
+              <ul class="space-y-3 text-xs text-slate-200">
+                <li>✓ Unlimited batch file uploads</li>
+                <li>✓ Ad-free experience & priority execution</li>
               </ul>
             </div>
-
-            <button onclick="openPaywall('Pro Unlimited Subscription')" class="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-indigo-600 to-accent-cyan text-white text-sm font-bold shadow-lg shadow-brand-500/40 hover:opacity-95 transition">
-              Upgrade for $4.99 / mo via Stripe
-            </button>
+            <button onclick="openPaywall('Pro Unlimited Subscription')" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg shadow-brand-500/30">Upgrade via Stripe</button>
           </div>
         </div>
       </div>
@@ -261,7 +280,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800/80 bg-slate-950 py-10 mt-12">
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
         <p>&copy; 2026 ZapDocu.com • Powered by Cloudflare Edge & Client-Side Browser Security.</p>
@@ -269,6 +288,14 @@
           <a href="#workspace" class="hover:text-slate-300 transition">Privacy Policy</a>
           <a href="#pricing" class="hover:text-slate-300 transition">Stripe Billing Terms</a>
         </div>
+      </div>
+      <div class="border-t border-slate-900 pt-6 flex flex-wrap gap-4 text-[11px] text-slate-600">
+        <span class="text-slate-400 font-semibold">Popular Workflows:</span>
+        <a href="#workspace" onclick="switchTool('merge-pdf')" class="hover:text-brand-400 transition">Merge PDF Online</a>
+        <a href="#workspace" onclick="switchTool('compress-pdf')" class="hover:text-brand-400 transition">Compress PDF Size</a>
+        <a href="#workspace" onclick="switchTool('rotate-pdf')" class="hover:text-brand-400 transition">Rotate PDF Pages</a>
+        <a href="#workspace" onclick="switchTool('watermark-pdf')" class="hover:text-brand-400 transition">Watermark PDF</a>
+        <a href="#workspace" onclick="switchTool('page-numbers')" class="hover:text-brand-400 transition">Add Page Numbers</a>
       </div>
     </div>
   </footer>
@@ -279,8 +306,8 @@
       <div class="bg-slate-900 rounded-[15px] p-6 space-y-6 relative">
         <button onclick="closePaywall()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
         <h3 id="paywall-title" class="text-xl font-bold text-slate-100 text-center">Upgrade to Pro</h3>
-        <p id="paywall-desc" class="text-xs text-slate-400 text-center">You have reached your 3 free conversions for today. Upgrade to Pro for unlimited access!</p>
-        <button onclick="simulateStripeCheckout()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg">Proceed to Secure Stripe Checkout ($4.99)</button>
+        <p class="text-xs text-slate-400 text-center">Unlock unlimited batch processing and secure cloud checkout via Stripe.</p>
+        <button onclick="simulateStripeCheckout()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-xs font-bold shadow-lg">Proceed to Secure Stripe Checkout</button>
       </div>
     </div>
   </div>
@@ -290,14 +317,18 @@
     let fileQueue = [];
 
     const toolMeta = {
-      'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents into a single organized file locally.', icon: 'file-plus-2' },
-      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while keeping visual quality intact.', icon: 'file-digit' },
-      'rotate-pdf': { title: 'Rotate PDF Pages', desc: 'Rotate pages by 90 degrees clockwise securely in your browser.', icon: 'rotate-cw' },
-      'split-pdf': { title: 'Split PDF Document', desc: 'Extract specific pages or page ranges into separate documents.', icon: 'scissors' },
-      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers across all pages of your PDF document.', icon: 'list-ordered' },
-      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay professional text watermarks securely across document pages.', icon: 'stamp' },
-      'jpg-pdf': { title: 'JPG to PDF Converter', desc: 'Turn JPG, PNG, or WEBP photos into a single PDF document.', icon: 'image-plus' },
-      'heic-jpg': { title: 'HEIC to JPG Converter', desc: 'Convert iPhone .heic photos to universal JPG format effortlessly.', icon: 'smartphone' }
+      'merge-pdf': { title: 'Merge PDF Files', desc: 'Combine multiple PDF documents into a single organized file locally[cite: 1, 2, 3].', icon: 'file-plus-2' },
+      'compress-pdf': { title: 'Compress PDF', desc: 'Reduce file size while keeping visual quality intact[cite: 1, 2, 3].', icon: 'file-digit' },
+      'rotate-pdf': { title: 'Rotate PDF Pages', desc: 'Rotate pages by 90 degrees clockwise securely in your browser[cite: 1, 2, 3].', icon: 'rotate-cw' },
+      'split-pdf': { title: 'Split PDF Document', desc: 'Extract specific pages or page ranges into separate documents[cite: 1, 2, 3].', icon: 'scissors' },
+      'page-numbers': { title: 'Add Page Numbers', desc: 'Stamp clean page numbers across all pages of your PDF document[cite: 1, 2, 3].', icon: 'list-ordered' },
+      'watermark-pdf': { title: 'Watermark PDF', desc: 'Overlay professional text watermarks securely across document pages[cite: 1, 2, 3].', icon: 'stamp' },
+      'pdf-jpg': { title: 'PDF to JPG', desc: 'Extract PDF pages into standalone downloadable image files.' },
+      'jpg-pdf': { title: 'JPG to PDF Converter', desc: 'Turn JPG, PNG, or WEBP photos into a single PDF document[cite: 1, 2, 3].', icon: 'image-plus' },
+      'heic-jpg': { title: 'HEIC to JPG Converter', desc: 'Convert iPhone .heic photos to universal JPG format effortlessly.', icon: 'smartphone' },
+      'heic-pdf': { title: 'HEIC to PDF Converter', desc: 'Convert iPhone photos directly into a clean, printable PDF document[cite: 1, 2, 3].', icon: 'file-output' },
+      'webp-png': { title: 'WEBP Converter', desc: 'Convert web WEBP images to standard PNG or JPG files.', icon: 'refresh-cw' },
+      'image-resizer': { title: 'Image Resizer & Optimizer', desc: 'Adjust dimensions and reduce file size with quality control.', icon: 'scaling' }
     };
 
     document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
@@ -356,38 +387,14 @@
 
     function clearQueue() { fileQueue = []; renderQueue(); }
 
-    // 24-Hour Free Limit Enforcement Check
-    function checkDailyLimit() {
-      const now = new Date().getTime();
-      let usageData = JSON.parse(localStorage.getItem('zapdocu_usage') || '{"count":0, "timestamp":' + now + '}');
-
-      // Reset every 24 hours (86400000 ms)
-      if (now - usageData.timestamp > 86400000) {
-        usageData = { count: 0, timestamp: now };
-      }
-
-      if (usageData.count >= 3) {
-        openPaywall('Daily Limit Reached', 'You have used your 3 free conversions for the last 24 hours. Upgrade to Pro for unlimited access or come back tomorrow!');
-        return false;
-      }
-
-      usageData.count++;
-      localStorage.setItem('zapdocu_usage', JSON.stringify(usageData));
-      return true;
-    }
-
     async function executeToolProcess() {
       if (fileQueue.length === 0) return;
-
-      // Enforce Free Daily Limit
-      if (!checkDailyLimit()) return;
-
       const btn = document.getElementById('process-btn');
       btn.innerText = "Processing locally...";
       btn.disabled = true;
 
       try {
-        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf') {
+        if (currentTool === 'merge-pdf' || currentTool === 'jpg-pdf' || currentTool === 'heic-pdf') {
           const mergedPdf = await PDFLib.PDFDocument.create();
           for (let file of fileQueue) {
             const buf = await file.arrayBuffer();
@@ -452,9 +459,8 @@
       document.body.removeChild(a); URL.revokeObjectURL(url);
     }
 
-    function openPaywall(title, desc) {
-      if (title) document.getElementById('paywall-title').innerText = title;
-      if (desc) document.getElementById('paywall-desc').innerText = desc;
+    function openPaywall(title) {
+      document.getElementById('paywall-title').innerText = title;
       document.getElementById('paywall-modal').classList.remove('hidden');
     }
 
@@ -463,7 +469,7 @@
     }
 
     function simulateStripeCheckout() {
-      // TODO: Replace this alert later today with your live Stripe Payment Link URL:
+      // TODO: Later today, replace this alert with your actual Stripe Payment Link URL:
       // window.location.href = "https://buy.stripe.com/your_actual_link_here";
       alert("Stripe Link integration point! Replace this alert with your live Stripe URL later today.");
       closePaywall();
